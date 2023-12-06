@@ -1,14 +1,4 @@
-from tqdm import tqdm
-import os
-from colorama import Fore,Back,Style
-import requests
-import flask
-from fpdf import FPDF
-import nmap
-import pymongo
-from pymongo import MongoClient
-from bs4 import BeautifulSoup
-import time
+
 
 def time_spent(func): # Функция для отчёта времени, после потребуеться для отчёта. TIMEIT НЕ РАБОТЕТ!
     start_time=time.time()
@@ -43,9 +33,21 @@ def check_mongodb_ver(host,port): # Поиск версии MongoDB опраши
     finally:
         target.close()
 
-print("Starting CVE Search... ")
-timesp=time_spent(cve_search("1.5"))
-print(f"CVE Search compite. Total time {timesp} ")
+def main_console():
+    from tqdm import tqdm
+    import os
+    from colorama import Fore, Back, Style
+    import requests
+    import flask
+    from fpdf import FPDF
+    import nmap
+    import pymongo
+    from pymongo import MongoClient
+    from bs4 import BeautifulSoup
+    import time
+    print("Starting CVE Search... ")
+    timesp=time_spent(cve_search("1.5"))
+    print(f"CVE Search compite. Total time {timesp} ")
 
 
 

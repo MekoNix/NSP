@@ -2,8 +2,8 @@
 import os
 import time
 from Scripts.menu import *
-
-
+from Scripts.NSP import main_console
+from Server.server import main_server
 def modules_install():
     try:
         from tqdm import tqdm
@@ -15,6 +15,7 @@ def modules_install():
         import pymongo
         from bs4 import BeautifulSoup
     except ModuleNotFoundError:
+        import time,os
         # В README написать как обновить pip "python.exe -m pip install --upgrade pip"
         listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4']
         print("Модули не установленны,начниаем установку...")
@@ -24,10 +25,10 @@ def modules_install():
             os.system(f"pip install {md} --quiet")
             bar.set_description(desc=f"Установка {md}")
         if menu_start() == 1:
-            from Scripts.NSP import *
+            main_console()
             exit()
         else:
-            from Server.server import *
+            main_server()
             exit()
 
 
