@@ -31,5 +31,4 @@ def modules_install():
             exit()
 
 
-os.system("pip install tqdm --quiet")
 modules_install()

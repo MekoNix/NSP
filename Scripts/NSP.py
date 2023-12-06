@@ -8,6 +8,15 @@ import nmap
 import pymongo
 from pymongo import MongoClient
 from bs4 import BeautifulSoup
+import time
+
+def time_spent(func): # Функция для отчёта времени, после потребуеться для отчёта. TIMEIT НЕ РАБОТЕТ!
+    start_time=time.time()
+    func
+    end_time=time.time()
+    execution_time=end_time-start_time
+    return execution_time
+# не работает выводит 0.0 времени.
 
 def cve_search(ver):# Поиск CVE по версии MongoDb на сайте. Если есть то функция вернёт True иначе False
     url=f"http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=mongodb+{ver}"
@@ -18,7 +27,7 @@ def cve_search(ver):# Поиск CVE по версии MongoDb на сайте. 
     pars=BeautifulSoup(response.text,'html.parser')
     found_text=pars.find(string=lambda text: target.lower() in text.lower() )
     if found_text:
-
+        return True
     else:
         return False
 
@@ -34,9 +43,9 @@ def check_mongodb_ver(host,port): # Поиск версии MongoDB опраши
     finally:
         target.close()
 
+print("Starting CVE Search... ")
+timesp=time_spent(cve_search("1.5"))
+print(f"CVE Search compite. Total time {timesp} ")
 
 
 
-
-
-print(cve_search('1.5'))
