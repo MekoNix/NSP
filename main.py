@@ -1,7 +1,4 @@
+from Scripts.modules import first_start_check
 import os
-from Scripts.modules import *
 
-from Server import *
-os.system("cls")
-os.system("pip install tqdm --quiet")
-modules_install()
+first_start_check()
