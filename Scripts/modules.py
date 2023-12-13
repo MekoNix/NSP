@@ -6,7 +6,6 @@ import time
 def cls(): # Модуль отчистки командной строки
     from platform import platform
     if 'Windows' in str(platform()):
-        print("asd")
         os.system("cls")
     else:
         os.system("clear")
@@ -42,6 +41,13 @@ def internet_con(): #Проверка на интернет соединение
     except OSError:
         exit("Интернет соединение отсутствует. Проверьте подключение")
 
+def server_ping(host):
+    answer=os.popen(f"ping {host}").read()
+    if "TTL" in answer:
+        return 1
+    else:
+        return 0
+
 def cominst():# Проверка компонентов
     from tqdm import tqdm
     pb = tqdm(total=2, desc="Проверка nmap ")
@@ -56,21 +62,29 @@ def cominst():# Проверка компонентов
 #=======================================================================================================================
 def modules_install(): # Установка моуделй. tqdm уже должен быть установлен
     from tqdm import tqdm
+    from log import log_event
     listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4']
+    log_event("Модули не установленны,начниаем установку","info")
     print("Модули не установленны,начниаем установку...")
     time.sleep(0.5)
     bar = tqdm(listm, desc="Установка модуля", unit="bit")
     for md in bar:
+        log_event(f"Установка модуля: {md}","info")
         os.system(f"pip install {md} --quiet")
         bar.set_description(desc=f"Установка {md}")
 
 
 #=======================================================================================================================
+# БЛОК МОДУЛЕЙ
 
 
 def first_start(): # Первый запуск программы. Установка компонентов и модулей
+    from log import log_event
+    log_event("Программа запушена в первые, начинаем настройку...",'info')
     print("Программа запушена в первые, начинаем настройку...")
+    log_event("Установка обновления pip","info")
     os.system("python.exe -m pip install --upgrade pip --quiet")
+    log_event("Установка модуля tqdm ", "info")
     os.system("pip install tqdm --quiet")
     from colorama import Fore,Back
     print(Back.BLACK+Fore.YELLOW)
@@ -82,6 +96,9 @@ def first_start(): # Первый запуск программы. Устано�
     print(Fore.GREEN+"Установка модулей завершена"+Fore.YELLOW)
     main()
 
+
+
+#=======================================================================================================================
 def main(): # Главаная программма для запуска NSP и его других частей.
     from colorama import Fore, Back,init
     from Scripts.menu import menu_start
