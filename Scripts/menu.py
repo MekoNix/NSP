@@ -1,6 +1,8 @@
 
 from colorama import Fore, Back,init
 from Scripts.modules import cls
+from Scripts.NSP import *
+
 def menu_start(): # Вывод меню с эффектом печатающей машинки
     import time
     cls()
@@ -21,6 +23,6 @@ def menu_start(): # Вывод меню с эффектом печатающей
         print(logo[i], end='', flush=True)
 
     if int(input("Выберите параметр запуска: ")) == 1:
-        return 1
+        return main()
     else:
         return 2
