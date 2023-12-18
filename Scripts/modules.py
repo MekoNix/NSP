@@ -118,19 +118,19 @@ def show_help():
 
 def display_version():
     import requests
-    url="https://api.github.com/repos/MekoNix/NSP/releases/lasted"
+    url="https://api.github.com/repos/MekoNix/NSP/releases/latest"
     response=requests.get(url)
     release_info = response.json()
-    latest_version = release_info.get("tag_name")
+    latest_version = release_info.get("name")
     return latest_version
 
 def set_host(host):
     from Scripts.log import log_event
     from colorama import Fore
     host=str(host)
-    #if not server_ping(host):
-        #print(Fore.Red+"Не возможно соединиься с сервером")
-        #log_event("Не возможно соединиься с сервером","Warning")
+    if not server_ping(host):
+        print(Fore.Red+"Не возможно соединиься с сервером")
+        log_event("Не возможно соединиься с сервером","Warning")
     write_info_file(f"Host target: {host}",host)
 # =======================================================================================================================
 def main():  # Главаная программма для запуска NSP и его других частей.
