@@ -1,6 +1,7 @@
 # Установка модулей с прогресс баром чтобы было не скучно и красиво.
 import os
 import time
+import json
 
 
 def cls():  # Модуль отчистки командной строки
@@ -95,13 +96,8 @@ def first_start():  # Первый запуск программы. Устано
     main()
 
 
-def write_info_file(line, host):
-    logpy_dir = os.path.dirname(os.path.abspath(__file__))  # Определяем папку с файлом log.py
-    start_dir = os.path.dirname(logpy_dir)  # Определяем папку с проектом
-    log_dir = os.path.join(start_dir+ '\logs')
-    log_file_path = os.path.join(log_dir, f"{host}.txt")
-    with open(log_file_path, 'a') as f:
-        f.write(f'{line}\n')
+
+
 
 def show_help():
     command_descriptions = {
@@ -110,7 +106,11 @@ def show_help():
         'set-host': 'Устанавливает хост для сканирования',
         'ver': 'Отображает версию программы',
         'scan': 'Запускает сканирование',
-        'clear': 'Очищает экран консоли'
+        'clear': 'Очищает экран консоли',
+        'credentials-set': 'Устанавливает логин и пароль для доступа к серверу.',
+        'LPS': 'Тоже самое что и credentials-set'
+
+
     }
     print("Справка по командам:")
     for command, description in command_descriptions.items():
@@ -131,7 +131,56 @@ def set_host(host):
     if not server_ping(host):
         print(Fore.Red+"Не возможно соединиься с сервером")
         log_event("Не возможно соединиься с сервером","Warning")
-    write_info_file(f"Host target: {host}",host)
+    write_to_json(f"Host:{host}",host)
+
+def set_port(port,host):
+    from Scripts.log import log_event
+    port=str(port)
+    write_to_json(f"Port:{port}",host)
+
+def write_to_json(line,host):
+    key, value = map(str.strip, line.split(':', 1))
+    dic={key:value}
+    try:
+        with open(get_json_path(host), 'r') as f:
+            # Загружаем существующие данные из файла
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Если файл не существует или не может быть декодирован, создаем новый пустой словарь
+        data = {}
+    data.update(dic)
+    with open(get_json_path(host),'w') as f:
+        f.write("") # Чистим файл, а то идёт наслоение, да кастыль но работает.
+    with open(get_json_path(host),'a') as f:
+        json.dump(data,f,indent=4)
+
+def get_json_path(host):
+    from Scripts.log import log_event
+    logpy_dir = os.path.dirname(os.path.abspath(__file__))  # Определяем папку с файлом log.py
+    start_dir = os.path.dirname(logpy_dir)  # Определяем папку с проектом
+    log_dir = os.path.join(start_dir+ '\logs')
+    log_file_path = os.path.join(log_dir, f"{host}.json")
+    try:
+        # Пытаемся открыть файл в режиме создания ('x')
+        with open(log_file_path, 'x'):
+            pass  # Если файл не существует, то он будет создан и оставлен пустым
+    except FileExistsError:
+        # Если файл уже существует, то ничего не делаем
+        pass
+    log_event(f"Json file {host}.json created",'info',npt=0)
+    return log_file_path
+
+def pars_json(whattopas,host):
+    with open(get_json_path(host)) as f:
+        json_data=json.load(f)
+    value=json_data.get(whattopas)
+    return value
+
+
+def LPS(pas,user,host):
+    write_to_json(f"User:{user}",host)
+    write_to_json(f"Password:{pas}",host)
+
 # =======================================================================================================================
 def main():  # Главаная программма для запуска NSP и его других частей.
     from colorama import Fore, Back, init

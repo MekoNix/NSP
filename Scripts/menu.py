@@ -23,6 +23,7 @@ def menu_start(): # Вывод меню с эффектом печатающей
         print(logo[i], end='', flush=True)
 
     if int(input("Выберите параметр запуска: ")) == 1:
+        log_event("-----------------------NEW LOG----------------------------",'info',npt=0)
         return main()
     else:
         return 2
