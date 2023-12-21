@@ -16,7 +16,6 @@ def cls():  # Модуль отчистки командной строки
 # ----------------------------------------------------------------------------------------------------------------------
 
 def first_start_check():  # Проверка на папку logs если программа уже запускалась logs будет существовать, если нет то программа создаст её и начнёт загрузку компонентов
-
     if not os.path.exists("logs"):
         os.mkdir("logs")
         first_start()
@@ -51,9 +50,9 @@ def server_ping(host):
 
 def cominst():  # Проверка компонентов
     from Scripts.log import log_event
-    log_event("Проверка nmap", level="info", npt=1)
+    log_event("Проверка nmap",npt=1)
     nmapc()
-    log_event("Проверка интернета", "info", 1)
+    log_event("Проверка интернета",npt=1)
     internet_con()
 
 
@@ -64,11 +63,11 @@ def modules_install():  # Установка моуделй. tqdm уже дол�
     from tqdm import tqdm
     from Scripts.log import log_event
     listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4']
-    log_event("Модули не установленны,начниаем установку", "info", npt=1)
+    log_event("Модули не установленны,начниаем установку", npt=1)
     time.sleep(0.5)
     bar = tqdm(listm, desc="Установка модуля", unit="bit")
     for md in bar:
-        log_event(f"Установка модуля: {md}", "info", 0)
+        log_event(f"Установка модуля: {md}", )
         os.system(f"pip install {md} --quiet")
         bar.set_description(desc=f"Установка {md}")
 
@@ -76,13 +75,26 @@ def modules_install():  # Установка моуделй. tqdm уже дол�
 # =======================================================================================================================
 # БЛОК МОДУЛЕЙ
 
-
+def disclaimer():
+    from Scripts.log import log_event
+    l1984="n"
+    text="""NSP - это утилита с открытым исходным кодом, предназначен для легального использования в рамках тестирования безопасности.
+Все введенные пользователем данные, включая IP-адреса и учетные записи, строго хранятся локально на компьютере пользователя 
+и не передаются разработчикам или третьим лицам.
+            """
+    print(text)
+    while l1984 !="y":
+        l1984=input("Согласится? y[да] n[нет]: ")
+        if l1984 == "n":
+            exit()
+    log_event("Пользователь согласился")
 def first_start():  # Первый запуск программы. Установка компонентов и модулей
     from Scripts.log import log_event
-    log_event("Программа запушена в первые, начинаем настройку...", 'info', npt=1)
-    log_event("Установка обновления pip", "info", 0)
+    disclaimer()
+    log_event("Программа запушена в первые, начинаем настройку...", npt=1)
+    log_event("Установка обновления pip")
     os.system("python.exe -m pip install --upgrade pip --quiet")
-    log_event("Установка модуля tqdm ", "info", 0)
+    log_event("Установка модуля tqdm " )
     os.system("pip install tqdm --quiet")
     from colorama import Fore, Back
     print(Back.BLACK + Fore.YELLOW)
@@ -137,6 +149,19 @@ def set_port(port,host):
     from Scripts.log import log_event
     port=str(port)
     write_to_json(f"Port:{port}",host)
+    log_event(f"Порт установлен: {port}", )
+
+def find_path(file='',nroot = 0): # Поиск файла в проекте, если нужен только корень nroot=1,
+    py_dir = os.path.dirname(os.path.abspath(__file__))  # Определяем папку с файлом logs.py
+    root = os.path.dirname(py_dir)  # Определяем папку с проектом
+    if nroot:
+        return root
+    else:
+        for root_folder,subfolders,files in os.walk(root):
+            if file in files:
+                path=os.path.join(root_folder,file)
+        return path
+
 
 def write_to_json(line,host):
     key, value = map(str.strip, line.split(':', 1))
@@ -156,22 +181,22 @@ def write_to_json(line,host):
 
 def get_json_path(host):
     from Scripts.log import log_event
-    logpy_dir = os.path.dirname(os.path.abspath(__file__))  # Определяем папку с файлом log.py
-    start_dir = os.path.dirname(logpy_dir)  # Определяем папку с проектом
-    log_dir = os.path.join(start_dir+ '\logs')
-    log_file_path = os.path.join(log_dir, f"{host}.json")
+    log_file_path=find_path(nroot=1)
+    log_file_path+=f"/logs/{host}.json"
     try:
         # Пытаемся открыть файл в режиме создания ('x')
         with open(log_file_path, 'x'):
             pass  # Если файл не существует, то он будет создан и оставлен пустым
+            log_event(f"Json file for {host} created")
     except FileExistsError:
         # Если файл уже существует, то ничего не делаем
         pass
-    log_event(f"Json file {host}.json created",'info',npt=0)
+
     return log_file_path
 
-def pars_json(whattopas,host):
-    with open(get_json_path(host)) as f:
+
+def pars_json(whattopas,file):
+    with open(get_json_path(file)) as f:
         json_data=json.load(f)
     value=json_data.get(whattopas)
     return value

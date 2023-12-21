@@ -18,3 +18,12 @@ Scripts/laba.py
 logs/NSP_log.log
 Scripts/__pycache__/menu.cpython-311.pyc
 Scripts/__pycache__/modules.cpython-311.pyc
+*.xml
+*.pyc
+*.pyc
+*.pyc
+Scripts/__pycache__/menu.cpython-311.pyc
+Scripts/__pycache__/__init__.cpython-39.pyc
+Scripts/__pycache__/__init__.cpython-311.pyc
+Scripts/__pycache__/NSP.cpython-311.pyc
+Scripts/__pycache__/NSP.cpython-311.pyc
