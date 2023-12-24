@@ -42,7 +42,17 @@ def add_to_json(filename, new_user):
 
     with open(filename, 'w', encoding='utf-8') as file:
         json.dump(users, file, indent=4, ensure_ascii=False)
+def parse_json_users(file):
+    
+    filename=find_path(file)
+    # Чтение данных из файла
+    with open(filename, 'r') as file:
+        data = json.load(file)
 
+    # Извлечение данных пользователей и дат создания
+    user_dates = [(item['User'], item['DateCreated']) for item in data]
+
+    return user_dates
 def create_users_file():
     # Генерируем пароль для первого пользователя
     password = generate_password()

@@ -23,15 +23,16 @@ def load_key():
         return file.read()
 key=load_key()
 # Функция для шифрования данных
-def encrypt_data(file_path=find_path("users.json")):
+file_path=find_path("users.json")
+def encrypt_data(file_path=file_path):
     fernet = Fernet(key)
 
     try:
         with open(file_path, 'r') as file:
             data = file.read()
         encrypted_data = fernet.encrypt(data.encode())
-
-        with open(file_path[:-11]+'/enc', 'wb') as file:
+        path=file_path[:-11]+'/enc'
+        with open(path, 'wb') as file:
             file.write(encrypted_data)
         os.remove(find_path('users.json'))
     except Exception as e:

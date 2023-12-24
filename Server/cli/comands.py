@@ -43,7 +43,9 @@ def show_active_connections():
     print("Отображение активных подключений к серверу...")
 
 def list_users():
-    print("Вывод списка всех пользователей...")
+    decrypt_and_save_json()
+    print(parse_json_users())
+    encrypt_data()
 
 def exit_program():
     print("Выход из программы...")
