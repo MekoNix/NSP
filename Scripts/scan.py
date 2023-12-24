@@ -32,7 +32,7 @@ def db_ver(host):
 
 def found_CVE_by_ver(ver):
     found=[]
-    cve=find_path("cve.json")
+    cve=find_path("../Server/app/static/cve.json")
     with open(cve, 'r') as file:
         cve_data = json.load(file)
     for cve, versions in cve_data.items():

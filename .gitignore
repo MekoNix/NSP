@@ -14,7 +14,7 @@ Scripts/__pycache__/menu.cpython-311.pyc
 Scripts/__pycache__/modules.cpython-311.pyc
 Scripts/__pycache__/NSP.cpython-311.pyc
 Scripts/__pycache__/modules.cpython-311.pyc
-Scripts/laba.py
+Server/cli/laba.py
 logs/NSP_log.log
 Scripts/__pycache__/menu.cpython-311.pyc
 Scripts/__pycache__/modules.cpython-311.pyc
@@ -27,3 +27,8 @@ Scripts/__pycache__/__init__.cpython-39.pyc
 Scripts/__pycache__/__init__.cpython-311.pyc
 Scripts/__pycache__/NSP.cpython-311.pyc
 Scripts/__pycache__/NSP.cpython-311.pyc
+*.pyc
+Server/__pycache__/__init__.cpython-39.pyc
+Server/__pycache__/__init__.cpython-311.pyc
+Server/__pycache__/server.cpython-311.pyc
+Server/Users/db/key

@@ -62,7 +62,7 @@ def cominst():  # Проверка компонентов
 def modules_install():  # Установка моуделй. tqdm уже должен быть установлен
     from tqdm import tqdm
     from Scripts.log import log_event
-    listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4']
+    listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4','reportlab','bcrypt','cryptography']
     log_event("Модули не установленны,начниаем установку", npt=1)
     time.sleep(0.5)
     bar = tqdm(listm, desc="Установка модуля", unit="bit")
@@ -88,6 +88,7 @@ def disclaimer():
         if l1984 == "n":
             exit()
     log_event("Пользователь согласился")
+
 def first_start():  # Первый запуск программы. Установка компонентов и модулей
     from Scripts.log import log_event
     disclaimer()
@@ -128,6 +129,8 @@ def show_help():
     for command, description in command_descriptions.items():
         print(f"/{command}: {description}")
 
+
+
 def display_version():
     import requests
     url="https://api.github.com/repos/MekoNix/NSP/releases/latest"
@@ -152,15 +155,17 @@ def set_port(port,host):
     log_event(f"Порт установлен: {port}", )
 
 def find_path(file='',nroot = 0): # Поиск файла в проекте, если нужен только корень nroot=1,
-    py_dir = os.path.dirname(os.path.abspath(__file__))  # Определяем папку с файлом logs.py
+    py_dir = os.path.dirname(os.path.abspath(__file__))  # Определяем папку с файлом
     root = os.path.dirname(py_dir)  # Определяем папку с проектом
+
     if nroot:
         return root
     else:
-        for root_folder,subfolders,files in os.walk(root):
+        for root_folder, subfolders, files in os.walk(root):
             if file in files:
-                path=os.path.join(root_folder,file)
-        return path
+                return os.path.join(root_folder, file)
+
+        return 0
 
 
 def write_to_json(line,host):

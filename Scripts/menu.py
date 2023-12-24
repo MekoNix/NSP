@@ -24,6 +24,7 @@ def menu_start(): # Вывод меню с эффектом печатающей
 
     if int(input("Выберите параметр запуска: ")) == 1:
         log_event("-----------------------NEW LOG----------------------------",'info',npt=0)
-        return main()
+        main()
     else:
-        return 2
+        from Server.cli.server_modules import main
+        main()
