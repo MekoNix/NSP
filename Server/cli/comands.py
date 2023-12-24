@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 from Server.cli.crypto import *
 from Server.cli.server_modules import *
-
+from colorama import Fore,Back
 from datetime import datetime
 def generate_password(length=12):
     characters = string.ascii_letters + string.digits
@@ -30,8 +30,8 @@ def add_user(createby='console',AcccessLevel='user'):
     add_to_json(find_path(nroot=1)+'/Server/Users/db/users.json',users_data)
     encrypt_data()
 
-def delete_user(username):
-    print(f"Удаление пользователя: {username}")
+def delete_user():
+    pass
 
 def show_status():
     print("Показ текущего статуса сервера...")
@@ -44,14 +44,15 @@ def show_active_connections():
 
 def list_users():
     decrypt_and_save_json()
-    print(parse_json_users())
+    for user,time in parse_json_users():
+        print(f"User: {user} Creation date: {time} ")
     encrypt_data()
 
 def exit_program():
     print("Выход из программы...")
     exit()
 def show_help():
-    help_text = """
+    help_text = Fore.WHITE+"""
     Server Utilities - Help Menu
     ============================
     Команды:
@@ -63,7 +64,7 @@ def show_help():
     status             - Показывает текущий статус сервера.
     serverinfo         - Предоставляет информацию о сервере, включая версию, время работы и т.д.
     activeconnection   - Отображает активные подключения к серверу.
-    users              - Выводит список всех пользователей.
+    user_list          - Выводит список всех пользователей.
     exit               - Выходит из программы
-        """
+        """+Fore.YELLOW
     print(help_text)

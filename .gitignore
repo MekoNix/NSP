@@ -32,3 +32,6 @@ Server/__pycache__/__init__.cpython-39.pyc
 Server/__pycache__/__init__.cpython-311.pyc
 Server/__pycache__/server.cpython-311.pyc
 Server/Users/db/key
+*.log
+*.pyc
+*.pyc

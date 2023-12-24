@@ -3,7 +3,10 @@ from cryptography.fernet import Fernet
 import datetime
 from Scripts.modules import *
 from Scripts.log import log_event
+
 import json
+import hashlib
+
 # Путь к файлу с ключом
 key_file = find_path(nroot=1)+"/Server/Users/db/key"
 
@@ -105,5 +108,17 @@ def update_encryption():
         encrypt_data(data_to_encrypt, new_key)
         log_event("Данные зашифрованы с новым ключом.")
 
-# Запуск функции
-decrypt_and_save_json()
+# Хэширвание паролей
+def hash_password(pword):
+    hashed_password = hashlib.sha256(pword.encode()).hexdigest()
+    return hashed_password
+
+def summ_hash(pwrod,user):
+    #НЕ РАБОТАЕТ НУНЖЕН ФИКС    from Server.cli.server_modules import find_password_for_user
+    decrypt_and_save_json()
+    filename=find_path("users.json")
+    hashpwrod=find_password_for_user(user=user,filename=filename)
+    if hash_password(pwrod) == hashpwrod:
+        return 1
+    else:
+        return 0

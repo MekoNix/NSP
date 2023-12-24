@@ -1,3 +1,5 @@
+import os
+
 from Scripts.log import log_event
 from Scripts.modules import *
 import string
@@ -42,9 +44,10 @@ def add_to_json(filename, new_user):
 
     with open(filename, 'w', encoding='utf-8') as file:
         json.dump(users, file, indent=4, ensure_ascii=False)
-def parse_json_users(file):
-    
-    filename=find_path(file)
+
+
+def parse_json_users():
+    filename=find_path("users.json")
     # Чтение данных из файла
     with open(filename, 'r') as file:
         data = json.load(file)
@@ -53,6 +56,18 @@ def parse_json_users(file):
     user_dates = [(item['User'], item['DateCreated']) for item in data]
 
     return user_dates
+
+def find_password_for_user(filename=find_path("users.json"),username="admin"):
+    with open(filename, 'r') as file:
+        data = json.load(file)
+
+    for item in data:
+        if item.get("User") == username:
+            return item.get("Pass")
+
+    return "Пользователь не найден"
+
+
 def create_users_file():
     # Генерируем пароль для первого пользователя
     password = generate_password()
@@ -60,7 +75,7 @@ def create_users_file():
     # Данные первого пользователя
     first_user_data = {
         "User": "admin",
-        "Pass": password,
+        "Pass": hash_password(password),
         "AccessLevel": "admin",
         "CreatedBy": "console",
         "DateCreated": date.strftime("%d.%m.%Y")
@@ -78,7 +93,7 @@ def initialize_application():
     if  not find_path("enc"):
         initial_password = create_users_file()
         print(f"To login please use the admin account with {initial_password} in password. Or create new user")
-        print("YOU WILL NOT BE ABLE TO CHANGE YOUR PASSWORD")
+        print(" PLEASE REMEMBER PASS YOU WILL NOT BE ABLE TO CHANGE YOUR PASSWORD")
     else:
         pass
 def command_handler(command, *args):
@@ -89,7 +104,7 @@ def command_handler(command, *args):
         "status": show_status,
         "serverinfo": show_server_info,
         "activeconnection": show_active_connections,
-        "users": list_users,
+        "user_list": list_users,
         "exit": exit_program,
         'help': show_help
     }
