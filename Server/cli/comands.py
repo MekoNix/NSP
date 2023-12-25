@@ -1,3 +1,5 @@
+import os
+
 from Scripts.log import log_event
 from Scripts.modules import *
 import string
@@ -7,20 +9,34 @@ from Server.cli.crypto import *
 from Server.cli.server_modules import *
 from colorama import Fore,Back
 from datetime import datetime
+
+
+logo=Fore.YELLOW + Back.BLACK + """
+    ███╗   ██╗███████╗██████╗ 
+    ████╗  ██║██╔════╝██╔══██╗
+    ██╔██╗ ██║███████╗██████╔╝
+    ██║╚██╗██║╚════██║██╔═══╝ 
+    ██║ ╚████║███████║██║     
+    ╚═╝  ╚═══╝╚══════╝╚═╝  
+    Server utilities
+"""
 def generate_password(length=12):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for i in range(length))
 
 date = datetime.now()
 def add_user(createby='console',AcccessLevel='user'):
-    username=input("Username: ")
+    username = input("User: ")
+    while ifuserexist(username)=="User exist, select another name":
+        username=input("User: ")
     decrypt_and_save_json()
     pas=generate_password(12)
     print(f"User {username} with password {pas} created successfully")
     log_event(f"Added user {username}, Created by: {createby}, AcccessLevel: {AcccessLevel}")
+    userfolder(username)
     user_data = {
         "User": username,
-        "Pass": pas,
+        "Pass": hash_password(pas),
         "AccessLevel": AcccessLevel,
         "CreatedBy": createby,
         "DateCreated": date.strftime("%d.%m.%Y")
@@ -29,6 +45,10 @@ def add_user(createby='console',AcccessLevel='user'):
     # Сохраняем данные в JSON-файл
     add_to_json(find_path(nroot=1)+'/Server/Users/db/users.json',users_data)
     encrypt_data()
+
+def clear():
+    cls()
+    print(logo)
 
 def delete_user():
     pass
@@ -58,9 +78,7 @@ def show_help():
     Команды:
     --------
     adduser            - Добавляет нового пользователя. 
-                         Использование: adduser [username]
     deluser            - Удаляет существующего пользователя.
-                         Использование: deluser [username]
     status             - Показывает текущий статус сервера.
     serverinfo         - Предоставляет информацию о сервере, включая версию, время работы и т.д.
     activeconnection   - Отображает активные подключения к серверу.

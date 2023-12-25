@@ -29,7 +29,7 @@ key=load_key()
 file_path=find_path("users.json")
 def encrypt_data(file_path=file_path):
     fernet = Fernet(key)
-
+    file_path = find_path("users.json")
     try:
         with open(file_path, 'r') as file:
             data = file.read()
@@ -57,7 +57,15 @@ def decrypt_data(file_path=find_path(nroot=1)+'/Server/Users/db/enc'):
     except Exception as e:
         print(f"Ошибка при расшифровке данных: {e}")
         return None
+def find_password_for_user(filename=find_path("users.json"),username=""):
+    with open(filename, 'r') as file:
+        data = json.load(file)
 
+    for item in data:
+        if item.get("User") == username:
+            return item.get("Pass")
+
+    return "Пользователь не найден"
 
 def decrypt_and_save_json(encrypted_file_path=find_path('enc'),key=load_key()):
     decrypted_data = decrypt_data()
@@ -75,7 +83,6 @@ def decrypt_and_save_json(encrypted_file_path=find_path('enc'),key=load_key()):
         with open(output_json_path, 'w', encoding='utf-8') as json_file:
             json.dump(data, json_file, ensure_ascii=False, indent=4)
 
-        log_event("Данные успешно сохранены")
         os.remove(find_path("enc"))
     except json.JSONDecodeError:
             log_event("Ошибка декодирования JSON. Проверьте формат расшифрованных данных.",'Warning',npt=0)
@@ -114,11 +121,11 @@ def hash_password(pword):
     return hashed_password
 
 def summ_hash(pwrod,user):
-    #НЕ РАБОТАЕТ НУНЖЕН ФИКС    from Server.cli.server_modules import find_password_for_user
     decrypt_and_save_json()
     filename=find_path("users.json")
-    hashpwrod=find_password_for_user(user=user,filename=filename)
+    hashpwrod=find_password_for_user(username=user,filename=filename)
     if hash_password(pwrod) == hashpwrod:
         return 1
     else:
         return 0
+    encrypt_data()

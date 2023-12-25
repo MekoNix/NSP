@@ -154,18 +154,33 @@ def set_port(port,host):
     write_to_json(f"Port:{port}",host)
     log_event(f"Порт установлен: {port}", )
 
-def find_path(file='',nroot = 0): # Поиск файла в проекте, если нужен только корень nroot=1,
-    py_dir = os.path.dirname(os.path.abspath(__file__))  # Определяем папку с файлом
-    root = os.path.dirname(py_dir)  # Определяем папку с проектом
+import os
 
-    if nroot:
+def find_path(file='', nroot=0, ndir=0):
+    """
+    Поиск файла или папки в проекте.
+    Если нужен только корень проекта, установите nroot=1.
+    Для поиска папки установите ndir=1 и укажите название папки в 'file'.
+    """
+    py_dir = os.path.dirname(os.path.abspath(__file__))  # Определяем директорию файла
+    root = os.path.dirname(py_dir)  # Определяем корневую директорию проекта
+
+    if ndir:
+        # Поиск директории
+        for root_folder, subfolders, _ in os.walk(root):
+            if file in subfolders:
+                return os.path.join(root_folder, file)
+        return None  # Возвращаем None, если директория не найдена
+
+    elif nroot:
         return root
     else:
-        for root_folder, subfolders, files in os.walk(root):
+        # Поиск файла
+        for root_folder, _, files in os.walk(root):
             if file in files:
                 return os.path.join(root_folder, file)
+        return None  # Возвращаем None, если файл не найден
 
-        return 0
 
 
 def write_to_json(line,host):

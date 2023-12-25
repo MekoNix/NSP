@@ -12,15 +12,7 @@ from colorama import Fore,Back
 
 
 
-logo=Fore.YELLOW + Back.BLACK + """
-    ███╗   ██╗███████╗██████╗ 
-    ████╗  ██║██╔════╝██╔══██╗
-    ██╔██╗ ██║███████╗██████╔╝
-    ██║╚██╗██║╚════██║██╔═══╝ 
-    ██║ ╚████║███████║██║     
-    ╚═╝  ╚═══╝╚══════╝╚═╝  
-    Server utilities
-"""
+
 
 
 
@@ -66,8 +58,24 @@ def find_password_for_user(filename=find_path("users.json"),username="admin"):
             return item.get("Pass")
 
     return "Пользователь не найден"
+def ifuserexist(username):
+    decrypt_and_save_json()
+    filename=find_path("users.json")
 
+    with open(filename, 'r') as file:
+        data = json.load(file)
 
+    for item in data:
+        if item.get("User") == username:
+            encrypt_data()
+            print("User exist, select another name")
+            return "User exist, select another name"
+    encrypt_data()
+    return 1
+def userfolder(username):
+    os.mkdir(find_path("profiles", ndir=1) + f"/{username}")
+    pathofuser = find_path("profiles", ndir=1) + f"/{username}"
+    log_event(f"Add folder for {username} in {pathofuser}")
 def create_users_file():
     # Генерируем пароль для первого пользователя
     password = generate_password()
@@ -80,6 +88,7 @@ def create_users_file():
         "CreatedBy": "console",
         "DateCreated": date.strftime("%d.%m.%Y")
     }
+    userfolder("admin")
     # Создаем список пользователей и добавляем первого пользователя
     users_data = [first_user_data]
     # Сохраняем данные в JSON-файл
@@ -97,7 +106,7 @@ def initialize_application():
     else:
         pass
 def command_handler(command, *args):
-    from Server.cli.comands import add_user,delete_user,show_help,show_status,show_server_info,show_active_connections,list_users,exit_program
+    from Server.cli.comands import add_user,delete_user,show_help,show_status,show_server_info,show_active_connections,list_users,exit_program,clear
     commands = {
         "adduser": add_user,
         "deluser": delete_user,
@@ -106,7 +115,8 @@ def command_handler(command, *args):
         "activeconnection": show_active_connections,
         "user_list": list_users,
         "exit": exit_program,
-        'help': show_help
+        'help': show_help,
+        'clear': clear
     }
 
     if command in commands:
@@ -116,15 +126,3 @@ def command_handler(command, *args):
 
 
 
-def main():
-    server_thread = threading.Thread(target=run_server)
-    server_thread.daemon = True
-    server_thread.start()
-    print()
-    log_event("Server start in http://localhost:5000",'info',npt=1)
-    initialize_application()
-
-    while True:
-        command_handler(input("Command: "))
-if __name__ == '__main__':
-    main()

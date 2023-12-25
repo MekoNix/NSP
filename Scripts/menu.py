@@ -26,5 +26,5 @@ def menu_start(): # Вывод меню с эффектом печатающей
         log_event("-----------------------NEW LOG----------------------------",'info',npt=0)
         main()
     else:
-        from Server.cli.server_modules import main
-        main()
+        from Server.cli.console import mainserv
+        mainserv()
