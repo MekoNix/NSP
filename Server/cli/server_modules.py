@@ -1,21 +1,16 @@
 import os
-
+import ctypes
 from Scripts.log import log_event
 from Scripts.modules import *
 import string
 import random
 from datetime import datetime
 from Server.cli.crypto import *
-from Server.app.server import run_server
 import threading
 from colorama import Fore,Back
-
-
-
-
-
-
-
+import shutil
+import os
+import stat
 
 
 def generate_password(length=12):
@@ -49,29 +44,40 @@ def parse_json_users():
 
     return user_dates
 
-def find_password_for_user(filename=find_path("users.json"),username="admin"):
+def remove_user_from_json(username,file=find_path(nroot=1)+'/Server/Users/db/users.json'):
+    try:
+        with open(file, 'r') as file:
+            users = json.load(file)
+            data=[item for item in users if item.get("User")!= username]
+            file=find_path(nroot=1)+'/Server/Users/db/users.json'
+            with open(file, 'w') as file:
+                json.dump(data, file, indent=4, ensure_ascii=False)
+    except FileNotFoundError:
+        users = []
+    except json.JSONDecodeError:
+        print("Ошибка чтения JSON файла.")
+        return
+def delete_file(username):
+    folder = find_path("profiles", ndir=1) + f"/{username}"
+    os.chmod(folder, stat.S_IWRITE)
+    shutil.rmtree(folder)
+def find_password_for_user(filename="",username="admin"):
+    filename=find_path("users.json")
     with open(filename, 'r') as file:
         data = json.load(file)
-
+    encrypt_data()
     for item in data:
         if item.get("User") == username:
             return item.get("Pass")
 
     return "Пользователь не найден"
 def ifuserexist(username):
-    decrypt_and_save_json()
-    filename=find_path("users.json")
+    path=find_path(nroot=1)+'/Server/Users/profiles'
+    if os.path.exists(path+f"/{username}"):
 
-    with open(filename, 'r') as file:
-        data = json.load(file)
-
-    for item in data:
-        if item.get("User") == username:
-            encrypt_data()
-            print("User exist, select another name")
-            return "User exist, select another name"
-    encrypt_data()
-    return 1
+        return 1
+    else:
+        return 0
 def userfolder(username):
     os.mkdir(find_path("profiles", ndir=1) + f"/{username}")
     pathofuser = find_path("profiles", ndir=1) + f"/{username}"
@@ -97,8 +103,9 @@ def create_users_file():
     encrypt_data(find_path(nroot=1)+'/Server/Users/db/users.json')
     return password  # Возвращаем пароль для дальнейшего использования
 
-# Предположим, это функция, вызываемая при запуске вашего приложения
+
 def initialize_application():
+    generate_and_save_key()
     if  not find_path("enc"):
         initial_password = create_users_file()
         print(f"To login please use the admin account with {initial_password} in password. Or create new user")
@@ -123,6 +130,4 @@ def command_handler(command, *args):
         commands[command](*args)
     else:
         print(f"Неизвестная команда: {command}. Напишите help для справки")
-
-
 

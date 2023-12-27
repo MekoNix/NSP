@@ -18,9 +18,7 @@ def menu_start(): # Вывод меню с эффектом печатающей
     [1] Запустить сканирование в консоли 
     [2] Запустить веб-сервер
     """
-    for i in range(len(logo)):
-        time.sleep(0.001)
-        print(logo[i], end='', flush=True)
+    print(logo)
 
     if int(input("Выберите параметр запуска: ")) == 1:
         log_event("-----------------------NEW LOG----------------------------",'info',npt=0)

@@ -27,9 +27,10 @@ def generate_password(length=12):
 date = datetime.now()
 def add_user(createby='console',AcccessLevel='user'):
     username = input("User: ")
-    while ifuserexist(username)=="User exist, select another name":
+    while ifuserexist(username) == 1:
+        print("User exist, change name")
         username=input("User: ")
-    decrypt_and_save_json()
+    decrypt_and_save_json()# Сломался decrypt надо починить, я поменял file_path нужно придумать как его вводить так чтобы не было проблем( он воодиться до создания фалйлов)
     pas=generate_password(12)
     print(f"User {username} with password {pas} created successfully")
     log_event(f"Added user {username}, Created by: {createby}, AcccessLevel: {AcccessLevel}")
@@ -51,8 +52,25 @@ def clear():
     print(logo)
 
 def delete_user():
-    pass
-
+    try:
+        uname = input("User: ")
+        while ifuserexist(uname) != 1:
+            print("User not exists check name")
+            uname = input("User: ")
+        decrypt_and_save_json()
+        pas=input("Password: ")
+        while summ_hash(pas,uname) == 0:
+            print("Не верный пароль")
+            pas = input("Password: ")
+        remove_user_from_json(uname)
+        delete_file(uname)
+        print(f"User {uname} deleted successfully")
+        log_event(f"Deleted user {uname}")
+        encrypt_data()
+    except Exception as e:
+        encrypt_data()
+        log_event(f"delete user failed with error: {e}",'')
+        print(f"Ошибка команды попробуйте снова: {e}")
 def show_status():
     print("Показ текущего статуса сервера...")
 

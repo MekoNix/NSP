@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        /* Стили для градиента фона */
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            background: linear-gradient(-45deg, #000000, #203f43, #203a43, #0af0ff);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+        }
+
+        /* Анимация градиента */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Стили для формы входа */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .login-form {
+            background: #000; /* Черный фон для формы */
+            color: #fff; /* Белый текст */
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .error-message {
+            color: red; /* Красный текст для сообщения об ошибке */
+            margin-top: 10px;
+        }
+        .signup-link {
+            margin-top: 15px;
+            display: block;
+            color: #fff; /* Белый текст для ссылки */
+            text-decoration: none; /* Убрать подчеркивание */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <form class="login-form" id="loginForm">
+            <h2>Login</h2>
+            <input type="text" placeholder="Username" name="username" required><br>
+            <input type="password" placeholder="Password" name="password" required><br>
+            <button type="submit">Login</button>
+            <p class="error-message" id="errorMessage" style="display: none;">Неверный логин или пароль</p>
+            <a href="/signup" class="signup-link">Create account</a>
+        </form>
+    </div>
+
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var username = document.getElementsByName('username')[0].value;
+        var password = document.getElementsByName('password')[0].value;
+
+        // Отправка данных на сервер
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password)
+        })
+        .then(response => response.text())
+        .then(text => {
+            if (text === "Login or password is incorrect") {
+                // Показываем сообщение об ошибке
+                document.getElementById('errorMessage').style.display = 'block';
+            } else {
+                // Обработка успешного входа
+                document.getElementById('loginContainer').style.display = 'none';
+                document.querySelector('body').style.animation = 'none';
+                window.location.href = "/2";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -22,12 +22,17 @@ def generate_and_save_key():
 
 # Функция для загрузки ключа из файла
 def load_key():
-    with open(key_file, 'rb') as file:
-        return file.read()
-key=load_key()
+    if find_path("key"):
+        with open(key_file, 'rb') as file:
+            return file.read()
+    else:
+        return None
 # Функция для шифрования данных
-file_path=find_path("users.json")
+file_path= find_path(nroot=1)+"/Server/Users/db/users.json"
+
 def encrypt_data(file_path=file_path):
+    key = load_key()
+
     fernet = Fernet(key)
     file_path = find_path("users.json")
     try:
@@ -43,21 +48,24 @@ def encrypt_data(file_path=file_path):
 
 # Функция для расшифровки данных
 def decrypt_data(file_path=find_path(nroot=1)+'/Server/Users/db/enc'):
+    key = load_key()
     # Создаем объект Fernet с предоставленным ключом
     fernet = Fernet(key)
-
     # Читаем зашифрованные данные из файла
     with open(file_path, 'rb') as file:
         encrypted_data = file.read()
-
     # Расшифровываем данные и возвращаем их
     try:
         decrypted_data = fernet.decrypt(encrypted_data)
+
         return decrypted_data.decode()
+
     except Exception as e:
         print(f"Ошибка при расшифровке данных: {e}")
+        # Не понятно почему не работет декрипт простор ошибка без ошибки. Обновление я не понимаю но ошибка исчеззла нужны тесты
         return None
 def find_password_for_user(filename=find_path("users.json"),username=""):
+    key = load_key()
     with open(filename, 'r') as file:
         data = json.load(file)
 
@@ -68,6 +76,7 @@ def find_password_for_user(filename=find_path("users.json"),username=""):
     return "Пользователь не найден"
 
 def decrypt_and_save_json(encrypted_file_path=find_path('enc'),key=load_key()):
+    key = load_key()
     decrypted_data = decrypt_data()
     output_json_path = str(find_path("enc")[:-4]) + '/users.json'
     # Проверяем, удалось ли расшифровать данные
@@ -94,6 +103,7 @@ def decrypt_and_save_json(encrypted_file_path=find_path('enc'),key=load_key()):
 
 # Основная функция
 def update_encryption():
+    key = load_key()
     # Проверяем, существует ли файл ключа и когда он был создан
     if os.path.exists(key_file):
         key_creation_date = datetime.date.fromtimestamp(os.path.getmtime(key_file))
@@ -120,12 +130,18 @@ def hash_password(pword):
     hashed_password = hashlib.sha256(pword.encode()).hexdigest()
     return hashed_password
 
-def summ_hash(pwrod,user):
-    decrypt_and_save_json()
+def summ_hash(pwrod,user):# Перед передачей паролей, расшифровываем файл
     filename=find_path("users.json")
     hashpwrod=find_password_for_user(username=user,filename=filename)
     if hash_password(pwrod) == hashpwrod:
         return 1
     else:
         return 0
-    encrypt_data()
+
+def summ_hash(pwrod,user):# Перед передачей паролей, расшифровываем файл
+    filename=find_path("users.json")
+    hashpwrod=find_password_for_user(username=user,filename=filename)
+    if hash_password(pwrod) == hashpwrod:
+        return 1
+    else:
+        return 0
