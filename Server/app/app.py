@@ -1,13 +1,15 @@
 from flask import *
 from Server.app.ms.login import *
-
+from Server.app.ms.WSGI import *
+from Server.app.ms.singup import *
 
 app = Flask(__name__)
 app.secret_key = "asdasd"
 @app.route('/')
 def hello_world():
-    return 'Привет, мир!'
 
+    return 'Привет, мир!'
+# BLOCK AUTH START
 @app.route('/logout')
 def logout():
     # Удаление данных пользователя из сессии
@@ -29,6 +31,21 @@ def login():
             return "Login or password is incorrect"
 
     return render_template('login.html')
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    error=None
+    try:
+        if request.method=="POST":
+            username = request.form['username']
+            password = request.form['password']
+            sing_up(username, password)
+            return redirect(url_for("2"))
+    except Exception as e:
+        log_event(f"Error occurred while creating user {e} ")
+        error=f"Error occurred while creating user {e} "
+    return render_template('signup.html',error=error)
+
+# BLOCK AUTH END
 @app.route("/2")
 @login_required
 def dwa():

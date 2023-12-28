@@ -1,11 +1,4 @@
-import os
 
-from Scripts.log import log_event
-from Scripts.modules import *
-import string
-import random
-from datetime import datetime
-from Server.cli.crypto import *
 from Server.cli.server_modules import *
 from colorama import Fore,Back
 from datetime import datetime
@@ -25,13 +18,12 @@ def generate_password(length=12):
     return ''.join(random.choice(characters) for i in range(length))
 
 date = datetime.now()
-def add_user(createby='console',AcccessLevel='user'):
+def add_user(createby='console',AcccessLevel='user',pas=generate_password(12)):
     username = input("User: ")
     while ifuserexist(username) == 1:
         print("User exist, change name")
         username=input("User: ")
     decrypt_and_save_json()# Сломался decrypt надо починить, я поменял file_path нужно придумать как его вводить так чтобы не было проблем( он воодиться до создания фалйлов)
-    pas=generate_password(12)
     print(f"User {username} with password {pas} created successfully")
     log_event(f"Added user {username}, Created by: {createby}, AcccessLevel: {AcccessLevel}")
     userfolder(username)

@@ -1,60 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Page</title>
-    <style>
-        /* Стили для градиента фона */
-        body, html {
-            height: 100%;
-            margin: 0;
-        }
-        body {
-            background: linear-gradient(-45deg, #000000, #203f43, #203a43, #0af0ff);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
-        }
-
-        /* Анимация градиента */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Стили для формы входа */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
-        .login-form {
-            background: #000; /* Черный фон для формы */
-            color: #fff; /* Белый текст */
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .error-message {
-            color: red; /* Красный текст для сообщения об ошибке */
-            margin-top: 10px;
-        }
-        .signup-link {
-            margin-top: 15px;
-            display: block;
-            color: #fff; /* Белый текст для ссылки */
-            text-decoration: none; /* Убрать подчеркивание */
-        }
-    </style>
+    <link rel="stylesheet" href="login.css">
+    <title>Login</title>
 </head>
 <body>
     <div class="login-container" id="loginContainer">
         <form class="login-form" id="loginForm">
+            <link rel="stylesheet" href="login.css">
             <h2>Login</h2>
+            <div class="tooltip">&#x26A0
+                <span class="tooltiptext">Case-sensitive</span></div>
             <input type="text" placeholder="Username" name="username" required><br>
             <input type="password" placeholder="Password" name="password" required><br>
             <button type="submit">Login</button>
             <p class="error-message" id="errorMessage" style="display: none;">Неверный логин или пароль</p>
-            <a href="/signup" class="signup-link">Create account</a>
+            <a href="/register" class="signup-link">Create account</a>
         </form>
     </div>
 
