@@ -8,7 +8,7 @@ app.secret_key = "asdasd"
 @app.route('/')
 def hello_world():
 
-    return 'Привет, мир!'
+    return "123"
 # BLOCK AUTH START
 @app.route('/logout')
 def logout():
@@ -38,7 +38,7 @@ def register():
         if request.method=="POST":
             username = request.form['username']
             password = request.form['password']
-            sing_up(username, password)
+            sign_up(username, password)
             return redirect(url_for("2"))
     except Exception as e:
         log_event(f"Error occurred while creating user {e} ")
@@ -53,4 +53,4 @@ def dwa():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

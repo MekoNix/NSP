@@ -1,14 +1,16 @@
 from Server.cli.comands import add_user
 from Scripts.log import log_event
 from datetime import datetime
-from Server.cli.server_modules import generate_password,userfolder,add_to_json
+from Server.cli.server_modules import generate_password,userfolder,add_to_json,ifuserexist
 from Server.cli.crypto import *
 
 
 def makeuser(username="",createby='console',AcccessLevel='user',pas=generate_password(12)):
     decrypt_and_save_json()
-    log_event(f"Added user {username}, Created by: {createby}, AcccessLevel: {AcccessLevel}")
-    userfolder(username)
+    if ifuserexist(username):
+        userfolder(username)
+    else:
+        raise "User exist cange name"
     date = datetime.now()
     user_data = {
         "User": username,
@@ -20,6 +22,7 @@ def makeuser(username="",createby='console',AcccessLevel='user',pas=generate_pas
     users_data = user_data
     # Сохраняем данные в JSON-файл
     add_to_json(find_path(nroot=1) + '/Server/Users/db/users.json', users_data)
+    log_event(f"Added user {username}, Created by: {createby}, AcccessLevel: {AcccessLevel}")
     encrypt_data()
-def sing_up(username,password):
+def sign_up(username,password):
         makeuser(username=username,pas=password,createby='Web server app',AcccessLevel='user')

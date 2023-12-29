@@ -1,5 +1,5 @@
 import os
-from Server.app.app import app  # импортируйте ваше Flask-приложение
+from Server.app.app import *
 
 def WSGI():
     if os.name == 'nt':  # Windows
@@ -28,4 +28,3 @@ def WSGI():
             'workers': 4,
         }
         Application(app, options).run()
-WSGI()

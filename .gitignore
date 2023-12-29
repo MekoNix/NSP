@@ -7,3 +7,4 @@ Server/Users/db/key
 *.log
 *.xml
 *.iml
+Server/Users/db/enc
