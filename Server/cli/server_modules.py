@@ -5,7 +5,7 @@ from Scripts.modules import *
 import string
 import random
 from datetime import datetime
-from Server.cli.crypto import *
+from Server.cli.crypto import hash_password,summ_hash
 import threading
 from colorama import Fore,Back
 import shutil
@@ -34,6 +34,7 @@ def add_to_json(filename, new_user):
 
 
 def parse_json_users():
+
     filename=find_path("users.json")
     # Чтение данных из файла
     with open(filename, 'r') as file:
@@ -65,7 +66,6 @@ def find_password_for_user(filename="",username="admin"):
     filename=find_path("users.json")
     with open(filename, 'r') as file:
         data = json.load(file)
-    encrypt_data()
     for item in data:
         if item.get("User") == username:
             return item.get("Pass")
@@ -85,7 +85,7 @@ def userfolder(username):
 def create_users_file():
     # Генерируем пароль для первого пользователя
     password = generate_password()
-    date=datetime.datetime.today()
+    date=datetime.today()
     # Данные первого пользователя
     first_user_data = {
         "User": "admin",
@@ -100,18 +100,16 @@ def create_users_file():
     # Сохраняем данные в JSON-файл
     with open(find_path(nroot=1)+'/Server/Users/db/users.json', 'w') as file:
         json.dump(users_data, file, indent=4)
-    encrypt_data(find_path(nroot=1)+'/Server/Users/db/users.json')
     return password  # Возвращаем пароль для дальнейшего использования
 
 
 def initialize_application():
-    generate_and_save_key()
-    if  not find_path("enc"):
+    if  not find_path("users.json"):
         initial_password = create_users_file()
         print(f"To login please use the admin account with {initial_password} in password. Or create new user")
         print(" PLEASE REMEMBER PASS YOU WILL NOT BE ABLE TO CHANGE YOUR PASSWORD")
     else:
-        pass
+            pass
 def command_handler(command, *args):
     from Server.cli.comands import add_user,delete_user,show_help,show_status,show_server_info,show_active_connections,list_users,exit_program,clear
     commands = {

@@ -7,18 +7,18 @@ from Scripts.log import log_event
 import json
 import hashlib
 
+
+
+# ВНИМАНИЕ CRYPTO PY отключён до лучших времён
+
 # Путь к файлу с ключом
 key_file = find_path(nroot=1)+"/Server/Users/db/key"
 
 # Путь к файлу с данными
 
 
-# Функция для генерации и сохранения нового ключа
-def generate_and_save_key():
-    key = Fernet.generate_key()
-    with open(key_file, 'wb') as file:
-        file.write(key)
-    return key
+
+
 
 # Функция для загрузки ключа из файла
 def load_key():
@@ -26,7 +26,12 @@ def load_key():
         with open(key_file, 'rb') as file:
             return file.read()
     else:
-        return None
+        # Функция для генерации и сохранения нового ключа
+        key = Fernet.generate_key()
+        with open(key_file, 'wb') as file:
+            file.write(key)
+        return key
+        return load_key()
 # Функция для шифрования данных
 file_path= find_path(nroot=1)+"/Server/Users/db/users.json"
 
@@ -45,6 +50,7 @@ def encrypt_data(file_path=file_path):
         os.remove(find_path('users.json'))
     except Exception as e:
         print(f"Произошла ошибка при шифровании данных: {e}")
+        return e
 
 # Функция для расшифровки данных
 def decrypt_data(file_path=find_path(nroot=1)+'/Server/Users/db/enc'):
@@ -54,16 +60,18 @@ def decrypt_data(file_path=find_path(nroot=1)+'/Server/Users/db/enc'):
     # Читаем зашифрованные данные из файла
     with open(file_path, 'rb') as file:
         encrypted_data = file.read()
+    decrypted_data = fernet.decrypt(encrypted_data)
+    return decrypted_data.decode()
     # Расшифровываем данные и возвращаем их
-    try:
-        decrypted_data = fernet.decrypt(encrypted_data)
-
-        return decrypted_data.decode()
-
-    except Exception as e:
-        print(f"Ошибка при расшифровке данных: {e}")
-        # Не понятно почему не работет декрипт простор ошибка без ошибки. Обновление я не понимаю но ошибка исчеззла нужны тесты
-        return None
+    # try:
+    #     decrypted_data = fernet.decrypt(encrypted_data)
+    #
+    #     return decrypted_data.decode()
+    #
+    # except Exception as e:
+    #     print(f"Ошибка при расшифровке данных: {e}")
+        # Не понятно почему не работет декрипт простор ошибка без ошибки. Обновление я не понимаю но ошибка исчеззла нужны тесты # Ошибка в frenet invalid token жебтлы га  разраеье не райзят error по этому было пусто
+        #return None
 def find_password_for_user(filename=find_path("users.json"),username=""):
     key = load_key()
     with open(filename, 'r') as file:
@@ -113,14 +121,14 @@ def update_encryption():
             old_data = decrypt_data(old_key)
 
             # Генерируем новый ключ и перешифровываем данные
-            new_key = generate_and_save_key()
+            new_key = load_key()
             encrypt_data(old_data, new_key)
             log_event("Данные перешифрованы с новым ключом.")
         else:
             pass
     else:
         # Если ключа нет, генерируем новый и шифруем данные
-        new_key = generate_and_save_key()
+        new_key = load_key()
         data_to_encrypt = find_path('users.json')
         encrypt_data(data_to_encrypt, new_key)
         log_event("Данные зашифрованы с новым ключом.")

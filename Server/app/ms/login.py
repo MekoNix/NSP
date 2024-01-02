@@ -19,12 +19,7 @@ def login_required(f):
 
 
 def login_web(username,password):
-    decrypt_and_save_json()
     if summ_hash(password,username):
-        encrypt_data()
         return 1
     else:
-        encrypt_data()
         return 0
-#test
-#qQkH4gqtJTch

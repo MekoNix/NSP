@@ -20,6 +20,8 @@
     </div>
 
     <script>
+
+        showErrorWithTimeout("yr",3000000000)
         // Обработка отправки формы входа
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -35,14 +37,14 @@
                 },
                 body: 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password)
             })
-            .then(response => response.text())
-            .then(text => {
-                if (text === "Login or password is incorrect") {
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
                     // Показываем сообщение об ошибке
                     showErrorWithTimeout(text, 3000);
                 } else {
                     // Обработка успешного входа
-                    window.location.href = "/2";
+                    window.location.href = data.redirect;
                 }
             })
             .catch(error => {

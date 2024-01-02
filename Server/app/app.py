@@ -26,11 +26,12 @@ def login():
 
         if login_web(username, password) == 1:
             session['authenticated'] = True
-            return redirect("/2")
+            return jsonify({'redirect': "/2"})
         else:
-            return "Login or password is incorrect"
+            return jsonify({'error': 'Incorrect username or password'},401)
 
     return render_template('login.html')
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     error=None
@@ -53,4 +54,5 @@ def dwa():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
+#lB3hJui3lwuv

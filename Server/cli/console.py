@@ -27,5 +27,6 @@ def mainserv():
 
     while True:
         command_handler(input("Command: "))
+
 if __name__ == '__main__':
     mainserv()
