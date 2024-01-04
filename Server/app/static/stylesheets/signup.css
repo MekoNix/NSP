@@ -1,4 +1,3 @@
-/* Скрыть скроллбар для всей страницы */
 html {
     overflow: hidden;
 }
@@ -9,8 +8,26 @@ body {
   animation: gradient 15s ease infinite;
   height: 100vh;
 }
-/* Стили для контейнера логина */
-.login-container {
+/* Стили для элементов внутри формы логина */
+.signup-container input,
+.signup-container button {
+    width: 100%; /* Полная ширина внутри блока */
+    padding: 10px; /* Отступы внутри элементов */
+    margin: 8px 0; /* Отступы между элементами */
+    display: inline-block; /* Расположение элементов в строку */
+    border: 1px solid #ccc; /* Граница элементов */
+    box-sizing: border-box; /* Расчет размеров с учетом padding и border */
+    border-radius: 4px; /* Скругленные углы */
+}
+
+/* Стили для кнопки */
+.signup-container button {
+    background-color: #4CAF50; /* Зеленый фон кнопки */
+    color: white; /* Белый текст на кнопке */
+    border: none; /* Убрать границу */
+    cursor: pointer; /* Стиль курсора при наведении */
+}
+.signup-container {
     /* Цвет фона и размеры блока */
     background-color: rgba(0, 0, 0, 0.5); /* Прозрачный фон для блока */
     padding: 20px; /* Отступы внутри блока */
@@ -25,67 +42,28 @@ body {
 
     /* Стилизация текста и элементов формы */
     color: white; /* Белый текст */
-    text-align: center; /* Выравнивание текста по центру */
-}
-
-/* Стили для элементов внутри формы логина */
-.login-container input,
-.login-container button {
-    width: 100%; /* Полная ширина внутри блока */
-    padding: 10px; /* Отступы внутри элементов */
-    margin: 8px 0; /* Отступы между элементами */
-    display: inline-block; /* Расположение элементов в строку */
-    border: 1px solid #ccc; /* Граница элементов */
-    box-sizing: border-box; /* Расчет размеров с учетом padding и border */
-    border-radius: 4px; /* Скругленные углы */
-}
-
-/* Стили для кнопки */
-.login-container button {
-    background-color: #4CAF50; /* Зеленый фон кнопки */
-    color: white; /* Белый текст на кнопке */
-    border: none; /* Убрать границу */
-    cursor: pointer; /* Стиль курсора при наведении */
 }
 
 /* Стили для ссылки на регистрацию */
-.signup-link {
-    color: #fff; /* Белый цвет текста */
+.ll {
+    color: #ffffff; /* Белый цвет текста */
     text-decoration: none; /* Убрать подчеркивание */
-}
-
-/* Стили для всплывающей подсказки */
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black; /* Пунктирная линия под иконкой подсказки */
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
     text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Позиционирование */
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-
-    /* Эффект появления */
-    opacity: 0;
-    transition: opacity 0.3s;
 }
 
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
+.errormessage {
+            color: #ff0000;
+            display: none;
+            text-align: center; /* Выравнивание текста по центру */
+            padding: 5px; /* Небольшой внутренний отступ */
+            font-size: 1em;
 }
+
+.signup-container {
+    position: relative;
+    padding-bottom: 30px; /* Дополнительное пространство для сообщения об ошибке */
+}
+
 
 @keyframes gradient {
   0% {

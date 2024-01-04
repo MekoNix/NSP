@@ -8,74 +8,14 @@
     <div class="login-container" id="loginContainer">
         <form class="login-form" id="loginForm">
             <h2>Login</h2>
-            <div class="tooltip">&#x26A0
-                <span class="tooltiptext">Case-sensitive</span>
-            </div>
             <input type="text" placeholder="Username" name="username" required><br>
             <input type="password" placeholder="Password" name="password" required><br>
             <button type="submit">Login</button>
-            <p class="error-message" id="errorMessage">Неверный логин или пароль</p>
-            <a href="/register" class="signup-link">Create account</a>
+            <a href="/signup" class="signup-link">Create account</a>
         </form>
+        <p class="error-message" id="errorMessage"></p>
     </div>
 
-    <script>
-
-        showErrorWithTimeout("yr",3000000000)
-        // Обработка отправки формы входа
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            var username = document.getElementsByName('username')[0].value;
-            var password = document.getElementsByName('password')[0].value;
-
-            // Отправка данных на сервер
-            fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    // Показываем сообщение об ошибке
-                    showErrorWithTimeout(text, 3000);
-                } else {
-                    // Обработка успешного входа
-                    window.location.href = data.redirect;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-
-        // Функция для отображения сообщения об ошибке с таймером
-        function showErrorWithTimeout(errorMessage, timeout) {
-            var errorMessageElement = document.getElementById('errorMessage');
-            var progressBarElement = document.getElementById('progressBar');
-
-            // Устанавливаем текст сообщения об ошибке
-            errorMessageElement.textContent = errorMessage;
-            errorMessageElement.appendChild(progressBarElement); // Добавляем прогресс-бар обратно, если он был удален
-
-            // Показываем сообщение об ошибке и обнуляем ширину прогресс-бара
-            errorMessageElement.style.display = 'block';
-            progressBarElement.style.width = '0%';
-
-            // Начинаем анимацию прогресс-бара
-            setTimeout(() => {
-                progressBarElement.style.width = '100%';
-            }, timeout);
-
-            // Скрываем сообщение об ошибке после таймаута
-            setTimeout(() => {
-                errorMessageElement.style.display = 'none';
-                progressBarElement.remove(); // Удаляем прогресс-бар, чтобы он не мешал повторному использованию сообщения
-            }, timeout);
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 </body>
 </html>

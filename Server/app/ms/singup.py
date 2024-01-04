@@ -6,21 +6,26 @@ from Server.cli.crypto import *
 
 
 def makeuser(username="",createby='console',AcccessLevel='user',pas=generate_password(12)):
-    if ifuserexist(username):
+    if not ifuserexist(username):
         userfolder(username)
     else:
-        raise "User exist cange name"
-    date = datetime.now()
-    user_data = {
-        "User": username,
-        "Pass": hash_password(pas),
-        "AccessLevel": AcccessLevel,
-        "CreatedBy": createby,
-        "DateCreated": date.strftime("%d.%m.%Y")
-    }
-    users_data = user_data
-    # Сохраняем данные в JSON-файл
-    add_to_json(find_path(nroot=1) + '/Server/Users/db/users.json', users_data)
-    log_event(f"Added user {username}, Created by: {createby}, AcccessLevel: {AcccessLevel}")
+        return 0
+    try:
+        date = datetime.datetime.now()
+        user_data = {
+            "User": username,
+            "Pass": hash_password(pas),
+            "AccessLevel": AcccessLevel,
+            "CreatedBy": createby,
+            "DateCreated": date.strftime("%d.%m.%Y")
+        }
+        users_data = user_data
+
+        add_to_json(find_path(nroot=1) + '/Server/Users/db/users.json', users_data)
+        log_event(f"Added user {username}, Created by: {createby}, AcccessLevel: {AcccessLevel}")
+        return 1
+    except Exception as e:
+        log_event(f"Failed to add user {username}, An error occurred: {e}")
+        raise e
 def sign_up(username,password):
-        makeuser(username=username,pas=password,createby='Web server app',AcccessLevel='user')
+        return makeuser(username=username,pas=password,createby='Web server app',AcccessLevel='user')

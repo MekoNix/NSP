@@ -86,27 +86,19 @@ body {
     visibility: visible;
     opacity: 1;
 }
+        .error-message {
+            color: red;
+            display: none;
+            text-align: center; /* Выравнивание текста по центру */
+            padding: 5px; /* Небольшой внутренний отступ */
+            font-size: 0.9em;
+        }
 
-.error-message {
-    display: none;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background-color: #ffcdd2;
-    color: #d32f2f;
-    padding: 10px;
-    border-radius: 4px;
-    z-index: 1000;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+        .login-container {
+            position: relative;
+            padding-bottom: 30px; /* Дополнительное пространство для сообщения об ошибке */
+        }
 
-.progress-bar {
-    height: 5px;
-    background-color: #d32f2f;
-    width: 0%;
-    transition: width 3s linear;
-}
 
 
 @keyframes gradient {

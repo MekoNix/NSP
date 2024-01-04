@@ -23,36 +23,33 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-
         if login_web(username, password) == 1:
             session['authenticated'] = True
-            return jsonify({'redirect': "/2"})
+            return redirect(url_for('dwa'))
         else:
-            return jsonify({'error': 'Incorrect username or password'},401)
+            return "Incorrect username or password", 401
 
     return render_template('login.html')
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    error=None
-    try:
-        if request.method=="POST":
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
+        if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
-            sign_up(username, password)
-            return redirect(url_for("2"))
-    except Exception as e:
-        log_event(f"Error occurred while creating user {e} ")
-        error=f"Error occurred while creating user {e} "
-    return render_template('signup.html',error=error)
 
+            if sign_up(username, password) == 1:
+                return redirect(url_for('login'))
+            else:
+                return "A user with this username already exists", 401
+
+        # Отображение страницы регистрации
+        return render_template('signup.html')
 # BLOCK AUTH END
 @app.route("/2")
 @login_required
 def dwa():
-    return "it not work "
+    return "It work "
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-#lB3hJui3lwuv

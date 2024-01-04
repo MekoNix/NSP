@@ -2,26 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-    <link  type="text/css"  href="{{ url_for('static', filename='stylesheets/signup.css') }}", rel="stylesheet" />
+    <title>Signup</title>
+    <link type="text/css" href="{{ url_for('static', filename='stylesheets/signup.css') }}" rel="stylesheet" />
 </head>
 <body>
-    <div class="registration-form">
-        <h2>Register</h2>
-        {% if error %}
-            <div class="error-message">Error occurred during sign up: {{ error }}</div>
-        {% endif %}
-        <form method="post" action="/register">
-            <div class="input-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Register</button>
+    <div class="signup-container" id="signupContainer">
+        <form id="signupForm">
+            <h2>Sign up</h2>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <input type="submit" value="Create">
+            <a href="/login" class="ll">Already have account </a>
         </form>
+        <div class="errormessage" id="errormessage"></div>
+
     </div>
+
+    <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
 </body>
 </html>
+
+
+
+
