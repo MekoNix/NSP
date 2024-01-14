@@ -13,6 +13,8 @@ import os
 import stat
 
 
+
+
 def generate_password(length=12):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for i in range(length))
@@ -128,4 +130,3 @@ def command_handler(command, *args):
         commands[command](*args)
     else:
         print(f"Неизвестная команда: {command}. Напишите help для справки")
-

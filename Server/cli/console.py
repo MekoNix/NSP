@@ -1,9 +1,11 @@
+import time
+
 from Scripts.modules import *
-import threading
-from Server.app.app import *
+from threading import Thread
+from Server.app.app import NSP,create_db
+from Server.app.ms.WSGI import WSGI
 from colorama import *
 from Server.cli.server_modules import *
-
 
 logo=Fore.YELLOW + Back.BLACK + """
     ███╗   ██╗███████╗██████╗ 
@@ -13,20 +15,28 @@ logo=Fore.YELLOW + Back.BLACK + """
     ██║ ╚████║███████║██║     
     ╚═╝  ╚═══╝╚══════╝╚═╝  
     Server utilities
+    
 """
-
-def mainserv():
-    cls()
+def ch():
     print(logo)
-    #server_thread = threading.Thread(target=app.run())
-    #server_thread.daemon = True
-    #server_thread.start()
-    print()
-    log_event("Server start in http://localhost:5000",'info',npt=1)
+    create_db()
     initialize_application()
-
     while True:
         command_handler(input("Command: "))
+
+def start_flask():
+    WSGI(NSP)
+
+
+def mainserv():
+    server_thread = Thread(target=start_flask)
+    server_thread.start()
+    time.sleep(2)
+
+    main_thread = Thread(target=ch)
+    main_thread.start()
+    log_event("Server started at localhost:8080", npt=1)
+
 
 if __name__ == '__main__':
     mainserv()

@@ -8,7 +8,13 @@ import json
 import hashlib
 
 
-
+def create_db():
+    if not find_path("Users",ndir=1):
+        os.mkdir(find_path("Server",ndir=1)+"/Users")
+        os.mkdir(find_path("Users", ndir=1)+"/db")
+        os.mkdir(find_path("Users", ndir=1) + "/profiles")
+    else:
+        pass
 # ВНИМАНИЕ CRYPTO PY отключён до лучших времён
 
 # Путь к файлу с ключом
@@ -22,6 +28,7 @@ key_file = find_path(nroot=1)+"/Server/Users/db/key"
 
 # Функция для загрузки ключа из файла
 def load_key():
+    create_db()
     if find_path("key"):
         with open(key_file, 'rb') as file:
             return file.read()
@@ -30,7 +37,6 @@ def load_key():
         key = Fernet.generate_key()
         with open(key_file, 'wb') as file:
             file.write(key)
-        return key
         return load_key()
 # Функция для шифрования данных
 file_path= find_path(nroot=1)+"/Server/Users/db/users.json"
@@ -153,3 +159,4 @@ def summ_hash(pwrod,user):# Перед передачей паролей, рас
         return 1
     else:
         return 0
+

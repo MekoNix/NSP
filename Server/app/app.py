@@ -3,14 +3,14 @@ from Server.app.ms.login import *
 from Server.app.ms.WSGI import *
 from Server.app.ms.singup import *
 
-app = Flask(__name__)
-app.secret_key = "asdasd"
-@app.route('/')
+NSP = Flask(__name__)
+NSP.secret_key = "asdasd"
+@NSP.route('/')
 def hello_world():
 
     return "123"
 # BLOCK AUTH START
-@app.route('/logout')
+@NSP.route('/logout')
 def logout():
     # Удаление данных пользователя из сессии
     session.pop('authenticated', None)
@@ -18,20 +18,20 @@ def logout():
     # Перенаправление на главную страницу или страницу входа
     return redirect(url_for('login'))
 
-@app.route("/login", methods=['GET', 'POST'])
+@NSP.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         if login_web(username, password) == 1:
             session['authenticated'] = True
-            return redirect(url_for('dwa'))
+            return redirect(url_for('home'))
         else:
             return "Incorrect username or password", 401
 
     return render_template('login.html')
 
-@app.route("/signup", methods=['GET', 'POST'])
+@NSP.route("/signup", methods=['GET', 'POST'])
 def signup():
         if request.method == 'POST':
             username = request.form['username']
@@ -45,11 +45,11 @@ def signup():
         # Отображение страницы регистрации
         return render_template('signup.html')
 # BLOCK AUTH END
-@app.route("/2")
+@NSP.route("/home")
 @login_required
-def dwa():
+def home():
     return "It work "
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    WSGI(NSP=NSP)

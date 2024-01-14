@@ -62,7 +62,7 @@ def cominst():  # Проверка компонентов
 def modules_install():  # Установка моуделй. tqdm уже должен быть установлен
     from tqdm import tqdm
     from Scripts.log import log_event
-    listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4','reportlab','bcrypt','cryptography','waitress','gunicorn','matplotlib',"windows-curses"]
+    listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4','reportlab','bcrypt','cryptography','waitress','gunicorn',"pymetasploit3"]
     log_event("Модули не установленны,начниаем установку", npt=1)
     time.sleep(0.5)
     bar = tqdm(listm, desc="Установка модуля", unit="bit")
@@ -106,6 +106,7 @@ def first_start():  # Первый запуск программы. Устано
     modules_install()
     print(Fore.GREEN + "Установка модулей завершена" + Fore.YELLOW)
     time.sleep(2)
+
     main()
 
 

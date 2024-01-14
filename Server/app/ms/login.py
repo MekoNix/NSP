@@ -1,4 +1,4 @@
-from Server.cli.crypto import *
+from Server.cli.crypto import summ_hash,load_key
 from Scripts.log import log_event
 from flask import session, redirect, url_for, request
 from functools import wraps

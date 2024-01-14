@@ -28,4 +28,4 @@ def makeuser(username="",createby='console',AcccessLevel='user',pas=generate_pas
         log_event(f"Failed to add user {username}, An error occurred: {e}")
         raise e
 def sign_up(username,password):
-        return makeuser(username=username,pas=password,createby='Web server app',AcccessLevel='user')
+        return makeuser(username=username,pas=password,createby='Web server NSP',AcccessLevel='user')
