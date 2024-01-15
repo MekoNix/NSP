@@ -22,7 +22,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                 return response.text();
             })
             .then(text => {
-                window.location.href = '/home'; // Пример перенаправления
+                window.location.href = '/dashboard'; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             })
             .catch(errorText => {
                 errorMessage.textContent = errorText;

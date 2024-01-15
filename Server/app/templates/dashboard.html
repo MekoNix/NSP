@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/dashboard.css') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</head>
+<body>
+    <body>
+      <div class="top-bar">
+      <span id="serverTime"></span>
+        <div class="user-info" onclick="toggleDropdownMenu()">
+             {{ username }}
+
+            <div class="dropdown-menu">
+                <a href="/logout">Выход</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <button class="sidebar-button" onclick="toggleSection('scanSection')">Scan</button>
+        <button class="sidebar-button" onclick="toggleSection('folderSection')">Folder</button>
+    </div>
+
+    <div class="main-content">
+        <div id="scanSection" class="content-section">
+            <form id="scanForm">
+                    <label for="host">Host:</label>
+                    <input type="text" id="host" name="host"><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password"><br><br>
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" name="login"><br><br>
+                    <label for="pass">Pass:</label>
+                    <input type="password" id="pass" name="pass"><br><br>
+                    <input type="button" value="Submit" onclick="submitForm()">
+                </form>
+            <p>Scan Section Content</p>
+        </div>
+        <div id="folderSection" class="content-section">
+            <button id="loadFiles">Загрузить файлы</button>
+            <p>Folder Section Content</p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<!-- <form id="scanForm">
+                    <label for="host">Host:</label>
+                    <input type="text" id="host" name="host"><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password"><br><br>
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" name="login"><br><br>
+                    <label for="pass">Pass:</label>
+                    <input type="password" id="pass" name="pass"><br><br>
+                    <input type="button" value="Submit" onclick="submitForm()">
+                </form> -->

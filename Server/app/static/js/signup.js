@@ -24,7 +24,7 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
         return response.text();
     })
     .then(text => {
-        window.location.href = '/login'; // Пример перенаправления после успешной регистрации
+        window.location.href = '/login';
     })
     .catch(errorText => {
         errormessage.textContent = errorText;
