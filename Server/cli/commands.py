@@ -20,13 +20,12 @@ def generate_password(length=12):
 date = datetime.now()
 def add_user(createby='console',AcccessLevel='user',pas=generate_password(12)):
     username = input("User: ")
-    while ifuserexist(username) == 1:
+    while if_user_exist(username) == 1:
         print("User exist, change name")
         username=input("User: ")
-     # Сломался decrypt надо починить, я поменял file_path нужно придумать как его вводить так чтобы не было проблем( он воодиться до создания фалйлов)
     print(f"User {username} with password {pas} created successfully")
     log_event(f"Added user {username}, Created by: {createby}, AcccessLevel: {AcccessLevel}")
-    userfolder(username)
+    user_folder(username)
     user_data = {
         "User": username,
         "Pass": hash_password(pas),
@@ -46,7 +45,7 @@ def clear():
 def delete_user():
     try:
         uname = input("User: ")
-        while ifuserexist(uname) != 1:
+        while if_user_exist(uname) != 1:
             print("User not exists check name")
             uname = input("User: ")
          
@@ -77,7 +76,19 @@ def list_users():
     for user,time in parse_json_users():
         print(f"User: {user} Creation date: {time} ")
      
-
+def login():
+    auth=False
+    while auth!=True:
+        User=input("Login as: ")
+        if if_user_exist(User):
+            pas=input(f"Password for {User}: ")
+            if summ_hash(pas,User)==1:
+                auth=True
+                return User
+            else:
+                print("Wrong Password")
+        else:
+            print("User not exist")
 def exit_program():
     print("Выход из программы...")
     exit()

@@ -10,8 +10,8 @@ function toggleSection(sectionId) {
         activeSection.style.display = 'block'; // Отображаем нужную секцию
         setTimeout(() => {
             activeSection.classList.add('active'); // Добавляем класс для анимации
-        }, 10); // Маленькая задержка перед началом анимации
-    }, 50); // Задержка соответствует времени исчезновения предыдущей секции
+        }, 10); //  задержка перед началом анимации
+    }, 50);
 }
 function toggleDropdownMenu() {
     const dropdownMenu = document.querySelector('.dropdown-menu');
@@ -23,22 +23,48 @@ function updateServerTime() {
     const currentTime = new Date().toLocaleTimeString();
     serverTimeElement.textContent = currentTime;
 }
+function loadAndDisplayFiles() {
+    fetch('/api/get-files')
+        .then(response => response.text())
+        .then(html => {
+            let container = document.getElementById('files-container');
+            container.innerHTML = html; // Вставляем HTML-код в контейнер
+        })
+        .catch(error => console.error('Ошибка при загрузке файлов:', error));
+}
 
-$(document).ready(function(){
-    $('#loadFiles').click(function(){
-        $.getJSON('/api/get-files', function(files){
-            $('#files').empty();
-            files.forEach(function(file){
-                // Создаем ссылку на файл
-                var fileLink = $('<a>').attr('href', '/path/to/files/' + file).text(file);
-                // Создаем элемент для отображения ссылки
-                var fileElement = $('<div>').addClass('file').append(fileLink);
-                // Добавляем элемент в список файлов
-                $('#files').append(fileElement);
-            });
-        });
+
+
+
+
+function submitForm() {
+    const host = document.getElementById('host').value;
+    const port = document.getElementById('port').value; // Используйте port
+    const login = document.getElementById('login').value;
+    const pass = document.getElementById('pass').value;
+
+    const data = { host, port, login, pass };
+
+    fetch('/dashboard', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        document.getElementById('scannerStatus').textContent = "Завершение работы проверте floder на pdf ";
+        // Обработка успешного ответа
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        // Обработка ошибки
     });
-});
+}
+
+
 
 
 setInterval(updateServerTime, 1000);

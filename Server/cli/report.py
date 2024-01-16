@@ -6,10 +6,11 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from Server.cli.server_modules import *
 from Scripts.modules import *
+from datetime import datetime
 
 
-
-def create_pdf_report(host, date, key_value_pairs, filename):
+def create_pdf_report(host, date, key_value_pairs,user):
+    filename=find_path("profiles",ndir=1)+f"/{user}/{host}.pdf"
     # Регистрация шрифта Consolas
     pdfmetrics.registerFont(TTFont('Consolas', filename=find_path("consolas.ttf")))
     addMapping('Consolas', 0, 0, 'Consolas')
@@ -46,11 +47,8 @@ def create_pdf_report(host, date, key_value_pairs, filename):
     # Сохранение PDF файла
     c.save()
 
-
-
-
-
-# Создание PDF отчета
-create_pdf_report(host_name, current_date, key_value_data, output_filename)
-
-print(f"PDF отчет успешно создан: {output_filename}")
+key_value_pairs = {
+    "OS": "Windows 10",
+    "Status": "Active",
+    "Last Scan": "2023-01-15"
+}

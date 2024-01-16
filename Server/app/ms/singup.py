@@ -1,13 +1,13 @@
-from Server.cli.comands import add_user
+from Server.cli.commands import add_user
 from Scripts.log import log_event
 from datetime import datetime
-from Server.cli.server_modules import generate_password,userfolder,add_to_json,ifuserexist
+from Server.cli.server_modules import generate_password,user_folder,add_to_json,if_user_exist
 from Server.cli.crypto import *
 
 
-def makeuser(username="",createby='console',AcccessLevel='user',pas=generate_password(12)):
-    if not ifuserexist(username):
-        userfolder(username)
+def make_user(username="",createby='console',AcccessLevel='user',pas=generate_password(12)):
+    if not if_user_exist(username):
+        user_folder(username)
     else:
         return 0
     try:
@@ -28,4 +28,4 @@ def makeuser(username="",createby='console',AcccessLevel='user',pas=generate_pas
         log_event(f"Failed to add user {username}, An error occurred: {e}")
         raise e
 def sign_up(username,password):
-        return makeuser(username=username,pas=password,createby='Web server NSP',AcccessLevel='user')
+        return make_user(username=username, createby='Web server NSP', AcccessLevel='user', pas=password)

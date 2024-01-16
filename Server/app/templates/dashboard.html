@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +9,8 @@
 
 </head>
 <body>
-    <body>
-      <div class="top-bar">
-      <span id="serverTime"></span>
+    <div class="top-bar">
+        <span id="serverTime"></span>
         <div class="user-info" onclick="toggleDropdownMenu()">
              {{ username }}
 
@@ -30,35 +28,25 @@
     <div class="main-content">
         <div id="scanSection" class="content-section">
             <form id="scanForm">
-                    <label for="host">Host:</label>
-                    <input type="text" id="host" name="host"><br><br>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password"><br><br>
-                    <label for="login">Login:</label>
-                    <input type="text" id="login" name="login"><br><br>
-                    <label for="pass">Pass:</label>
-                    <input type="password" id="pass" name="pass"><br><br>
-                    <input type="button" value="Submit" onclick="submitForm()">
-                </form>
-            <p>Scan Section Content</p>
+                <label for="host">Host:</label>
+                <input type="text" id="host" name="host"><br><br>
+                <label for="port">Port:</label>
+                <input type="text" id="port" name="port"><br><br>
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="login"><br><br>
+                <label for="pass">Pass:</label>
+                <input type="password" id="pass" name="pass"><br><br>
+                <input type="button" value="Submit" onclick="submitForm()">
+                <div id="scannerStatus"></div>
+            </form>
+<p>Scan Section Content</p>
+
         </div>
         <div id="folderSection" class="content-section">
-            <button id="loadFiles">Загрузить файлы</button>
-            <p>Folder Section Content</p>
+            <button onclick="loadAndDisplayFiles()">Загрузить файлы</button>
+            <div id="files-container"></div>
+
         </div>
     </div>
 </body>
 </html>
-
-
-<!-- <form id="scanForm">
-                    <label for="host">Host:</label>
-                    <input type="text" id="host" name="host"><br><br>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password"><br><br>
-                    <label for="login">Login:</label>
-                    <input type="text" id="login" name="login"><br><br>
-                    <label for="pass">Pass:</label>
-                    <input type="password" id="pass" name="pass"><br><br>
-                    <input type="button" value="Submit" onclick="submitForm()">
-                </form> -->

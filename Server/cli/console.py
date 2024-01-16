@@ -18,11 +18,23 @@ logo=Fore.YELLOW + Back.BLACK + """
     
 """
 def ch():
+
+    global User
     print(logo)
     create_db()
     initialize_application()
+    user = "Admin"
+    user_changed = False
+
     while True:
-        command_handler(input("Command: "))
+        if user_changed:
+            print(f"Logged in as {user}")
+            user_changed = False
+
+        command_input = input(f"{user}@localhost: ")
+        command, *args = command_input.split()
+        user, user_changed = command_handler(command, user, *args)
+
 
 def start_flask():
     WSGI(NSP)

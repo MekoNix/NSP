@@ -107,3 +107,20 @@ a{
     padding: 10px 20px;
 
 }
+.file-block {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #00000000;
+    animation: slide-up 1s ease-out;
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

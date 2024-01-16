@@ -73,14 +73,14 @@ def find_password_for_user(filename="",username="admin"):
             return item.get("Pass")
 
     return "Пользователь не найден"
-def ifuserexist(username):
+def if_user_exist(username):
     path=find_path(nroot=1)+'/Server/Users/profiles'
     if os.path.exists(path+f"/{username}"):
 
         return 1
     else:
         return 0
-def userfolder(username):
+def user_folder(username):
     os.mkdir(find_path("profiles", ndir=1) + f"/{username}")
     pathofuser = find_path("profiles", ndir=1) + f"/{username}"
     log_event(f"Add folder for {username} in {pathofuser}")
@@ -96,7 +96,7 @@ def create_users_file():
         "CreatedBy": "console",
         "DateCreated": date.strftime("%d.%m.%Y")
     }
-    userfolder("admin")
+    user_folder("admin")
     # Создаем список пользователей и добавляем первого пользователя
     users_data = [first_user_data]
     # Сохраняем данные в JSON-файл
@@ -112,8 +112,9 @@ def initialize_application():
         print(" PLEASE REMEMBER PASS YOU WILL NOT BE ABLE TO CHANGE YOUR PASSWORD")
     else:
             pass
-def command_handler(command, *args):
-    from Server.cli.comands import add_user,delete_user,show_help,show_status,show_server_info,show_active_connections,list_users,exit_program,clear
+def command_handler(command, user, *args):
+    from Server.cli.commands import add_user, delete_user, show_help, show_status, show_server_info, show_active_connections, list_users, exit_program, clear, login
+
     commands = {
         "adduser": add_user,
         "deluser": delete_user,
@@ -123,10 +124,16 @@ def command_handler(command, *args):
         "user_list": list_users,
         "exit": exit_program,
         'help': show_help,
-        'clear': clear
+        'clear': clear,
+        'login': login
     }
 
     if command in commands:
-        commands[command](*args)
+        if command == 'login':
+            return login(), True  # Возвращает нового пользователя и флаг смены пользователя
+        else:
+            commands[command](*args)
     else:
-        print(f"Неизвестная команда: {command}. Напишите help для справки")
+        print(f"Команда {command} не найдена, напишите help")
+
+    return user, False
