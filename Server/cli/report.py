@@ -6,11 +6,12 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from Server.cli.server_modules import *
 from Scripts.modules import *
-from datetime import datetime
 
+date = datetime.now().strftime("Date: %d.%m.%Y Time: %H:%M")
 
-def create_pdf_report(host, date, key_value_pairs,user):
-    filename=find_path("profiles",ndir=1)+f"/{user}/{host}.pdf"
+def create_pdf_report(host, key_value_pairs, user):
+    filename = find_path("profiles", ndir=1) + f"/{user}/{host}.pdf"
+
     # Регистрация шрифта Consolas
     pdfmetrics.registerFont(TTFont('Consolas', filename=find_path("consolas.ttf")))
     addMapping('Consolas', 0, 0, 'Consolas')
@@ -25,16 +26,16 @@ def create_pdf_report(host, date, key_value_pairs,user):
     # Установка шрифта Consolas для остального текста
     c.setFont("Consolas", 12)
 
-    # Установка Host и Date
+    # Установка Host, Date и количества найденных CVE
     c.drawString(50, height - 60, f"Host: {host}")
-    c.drawString(400, height - 60, f"Date: {date}")
+    c.drawString(400, height - 60, date)
+    c.drawString(50, height - 80, f"Total found CVEs: {len(key_value_pairs)}")
 
     # Начальная позиция Y для пар ключ-значение
     y_position = height - 120
 
     # Рисование полей ключ-значение
     for key, value in key_value_pairs.items():
-        # Установка красного цвета для выделения
         c.setStrokeColor(colors.red)
         c.drawString(50, y_position, f"{key}:")
         text = c.beginText(50, y_position)
@@ -46,9 +47,3 @@ def create_pdf_report(host, date, key_value_pairs,user):
 
     # Сохранение PDF файла
     c.save()
-
-key_value_pairs = {
-    "OS": "Windows 10",
-    "Status": "Active",
-    "Last Scan": "2023-01-15"
-}

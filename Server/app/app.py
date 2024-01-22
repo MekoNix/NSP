@@ -7,7 +7,7 @@ from Server.app.ms.singup import *
 from datetime import datetime
 import os
 from Server.cli.report import create_pdf_report
-
+from Scripts.Scaner.Light import *
 NSP = Flask(__name__)
 NSP.secret_key = "J!#ascva#GFA2444!#SA"
 @NSP.route('/')
@@ -95,7 +95,7 @@ def dashboard():
             "Host Port": data["host"]+":"+data["port"],
 
         }
-        create_pdf_report(host=data["host"],date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),key_value_pairs=key_value_pairs,user=user)
+        wsgi_test(data["host"],user)
         return jsonify({"status": "success", "message": "Данные получены"})
 
     return render_template("dashboard.html", username=user)

@@ -203,9 +203,8 @@ def write_to_json(line,host):
 def get_json_path(host):
     from Scripts.log import log_event
     log_file_path=find_path(nroot=1)
-    log_file_path+=f"/logs/{host}.json"
     try:
-        # Пытаемся открыть файл в режиме создания ('x')
+        # Пытаемся открыть файл в режиме создания
         with open(log_file_path, 'x'):
             pass  # Если файл не существует, то он будет создан и оставлен пустым
             log_event(f"Json file for {host} created")
@@ -216,11 +215,8 @@ def get_json_path(host):
     return log_file_path
 
 
-def pars_json(whattopas,file):
-    with open(get_json_path(file)) as f:
-        json_data=json.load(f)
-    value=json_data.get(whattopas)
-    return value
+
+
 
 
 def LPS(pas,user,host):
