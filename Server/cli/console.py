@@ -6,23 +6,21 @@ from Server.app.app import NSP,create_db
 from Server.app.ms.WSGI import WSGI
 from colorama import *
 from Server.cli.server_modules import *
+from Server.cli.commands import logo
+from Server.app.ms.Update_CVE import *
 
-logo=Fore.YELLOW + Back.BLACK + """
-    ███╗   ██╗███████╗██████╗ 
-    ████╗  ██║██╔════╝██╔══██╗
-    ██╔██╗ ██║███████╗██████╔╝
-    ██║╚██╗██║╚════██║██╔═══╝ 
-    ██║ ╚████║███████║██║     
-    ╚═╝  ╚═══╝╚══════╝╚═╝  
-    Server utilities
-    
-"""
 def ch():
-
     global User
+
     print(logo)
+    print("Updating CVE base")
+    Update_CVE_Base()
+    print("Creating DB")
     create_db()
+    print("Starting app")
     initialize_application()
+    cls()
+    print(logo)
     user = "Admin"
     user_changed = False
 
@@ -36,17 +34,15 @@ def ch():
         user, user_changed = command_handler(command, user, *args)
 
 
-def start_flask():
-    WSGI(NSP)
+
+
 
 
 def mainserv():
-    server_thread = Thread(target=start_flask)
-    server_thread.start()
-    time.sleep(2)
-
     main_thread = Thread(target=ch)
     main_thread.start()
+    time.sleep(2)
+    WSGI(NSP)
     log_event("Server started at localhost:8080", npt=1)
 
 

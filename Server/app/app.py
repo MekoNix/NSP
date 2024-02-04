@@ -13,7 +13,7 @@ NSP.secret_key = "J!#ascva#GFA2444!#SA"
 @NSP.route('/')
 def hello_world():
 
-    return "123"
+    return redirect(url_for('login'))
 # BLOCK AUTH START
 login_manager=LoginManager()
 login_manager.init_app(NSP)

@@ -2,7 +2,7 @@
 from Server.cli.server_modules import *
 from colorama import Fore,Back
 from datetime import *
-
+from Server.app.ms.killer import *
 
 logo=Fore.YELLOW + Back.BLACK + """
     ███╗   ██╗███████╗██████╗ 
@@ -62,14 +62,6 @@ def delete_user():
  
         log_event(f"delete user failed with error: {e}",'')
         print(f"Ошибка команды попробуйте снова: {e}")
-def show_status():
-    print("Показ текущего статуса сервера...")
-
-def show_server_info():
-    print("Предоставление информации о сервере...")
-
-def show_active_connections():
-    print("Отображение активных подключений к серверу...")
 
 def list_users():
      
@@ -91,7 +83,9 @@ def login():
             print("User not exist")
 def exit_program():
     print("Выход из программы...")
-    exit()
+    pid = os.getpid()
+    kill_process(pid)
+
 def show_help():
     help_text = Fore.WHITE+"""
     Server Utilities - Help Menu
@@ -100,9 +94,6 @@ def show_help():
     --------
     adduser            - Добавляет нового пользователя. 
     deluser            - Удаляет существующего пользователя.
-    status             - Показывает текущий статус сервера.
-    serverinfo         - Предоставляет информацию о сервере, включая версию, время работы и т.д.
-    activeconnection   - Отображает активные подключения к серверу.
     user_list          - Выводит список всех пользователей.
     exit               - Выходит из программы
         """+Fore.YELLOW

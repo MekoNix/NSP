@@ -3,14 +3,7 @@ from Scripts.modules import *
 from pymongo import MongoClient
 from Server.cli.report import *
 
-def find_cve_by_version_in_file(version, file_path):
-        CVEs=[]
-        with open(file_path, 'r') as file:
-            json_data = json.load(file)
-        for cve, versions in json_data.items():
-            if version in versions:
-                CVEs.append(cve)
-        return cve_preforme(CVEs)
+
 
 def cve_preforme(CVE_List):
     if not CVE_List:
