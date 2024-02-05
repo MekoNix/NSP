@@ -113,14 +113,11 @@ def initialize_application():
     else:
             pass
 def command_handler(command, user, *args):
-    from Server.cli.commands import add_user, delete_user, show_help, show_status, show_server_info, show_active_connections, list_users, exit_program, clear, login
+    from Server.cli.commands import add_user, delete_user, show_help,list_users, exit_program, clear, login
 
     commands = {
         "adduser": add_user,
         "deluser": delete_user,
-        "status": show_status,
-        "serverinfo": show_server_info,
-        "activeconnection": show_active_connections,
         "user_list": list_users,
         "exit": exit_program,
         'help': show_help,

@@ -45,13 +45,14 @@ def find_affected_cves(data, target_version):
 
     return affected_cves
 
-# Путь к файлу JSON с данными
-file_path = 'data.json'
 
-# Загрузка данных
-data = load_data_from_json(find_path("cve.json"))
+def scan_db_for_CVE(version):
 
-# Пример использования
-target_version = "5.0.0"
-affected_cves = find_affected_cves(data, target_version)
-print("Affected CVEs for version", target_version, ":", affected_cves)
+
+    data = load_data_from_json(find_path("cve.json"))
+
+    # Пример использования
+    target_version = str(version)
+    affected_cves = find_affected_cves(data, target_version)
+    return affected_cves
+

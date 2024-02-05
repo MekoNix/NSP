@@ -7,7 +7,8 @@ from Server.app.ms.singup import *
 from datetime import datetime
 import os
 from Server.cli.report import create_pdf_report
-from Scripts.Scaner.Light import *
+
+
 NSP = Flask(__name__)
 NSP.secret_key = "J!#ascva#GFA2444!#SA"
 @NSP.route('/')
@@ -57,32 +58,30 @@ def signup():
         return render_template('signup.html')
 # BLOCK AUTH END
 #API BLOCK START
+@NSP.route('/api/upload', methods=['POST'])
 @login_required
-@NSP.route("/api/get-files")
-def get_files():
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'message': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'message': 'No selected file'}), 400
     user = current_user.username
     path = find_path(nroot=1) + f"/Server/Users/profiles/{user}"
-    files_info = []
-    for f in os.listdir(path):
-        if os.path.isfile(os.path.join(path, f)):
-            creation_time = datetime.fromtimestamp(os.path.getctime(os.path.join(path, f)))
-            files_info.append({'name': f, 'date': creation_time.strftime('%Y-%m-%d %H:%M:%S')})
+    file_path = os.path.join(path, file.filename)
+    file.save(file_path)
+    return jsonify({'message': 'File uploaded successfully'}), 200
 
-    # Добавляем "Scan date:" перед датой
-    html_files = ''.join([
-                             f"<div><a href='/api/download/{file['name']}' download='{file['name']}'>{file['name']}</a> - Scan date: {file['date']}</div>"
-                             for file in files_info])
-    return html_files
-
-
+@NSP.route('/api/download/<filename>', methods=['GET'])
 @login_required
-@NSP.route('/api/download/<filename>')
 def download_file(filename):
     user = current_user.username
     path = find_path(nroot=1) + f"/Server/Users/profiles/{user}"
+    if not os.path.exists(os.path.join(path, filename)):
+        abort(404)
     return send_from_directory(path, filename, as_attachment=True)
 
-#API BLOCK STOP
+#API BLOCK END
 @NSP.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():

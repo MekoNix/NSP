@@ -1,4 +1,4 @@
-# Установка модулей с прогресс баром чтобы было не скучно и красиво.
+
 import os
 import time
 import json
@@ -17,7 +17,7 @@ def cls():  # Модуль отчистки командной строки
 
 def first_start_check():  # Проверка на папку logs если программа уже запускалась logs будет существовать, если нет то программа создаст её и начнёт загрузку компонентов
     if not os.path.exists("logs"):
-        os.mkdir("logs")
+
         first_start()
     else:
         main()
@@ -61,14 +61,11 @@ def cominst():  # Проверка компонентов
 # =======================================================================================================================
 def modules_install():  # Установка моуделй. tqdm уже должен быть установлен
     from tqdm import tqdm
-    from Scripts.log import log_event
     listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4','reportlab','bcrypt','cryptography','waitress','gunicorn',"pymetasploit3","flask-login"]
-    log_event("Модули не установленны,начниаем установку", npt=1)
     time.sleep(0.5)
     bar = tqdm(listm, desc="Установка модуля", unit="bit")
     for md in bar:
-        log_event(f"Установка модуля: {md}", )
-        os.system(f"pip install {md} --quiet")
+        os.system(f"py -m pip install {md} --quiet")
         bar.set_description(desc=f"Установка {md}")
 
 
@@ -76,7 +73,6 @@ def modules_install():  # Установка моуделй. tqdm уже дол�
 # БЛОК МОДУЛЕЙ
 
 def disclaimer():
-    from Scripts.log import log_event
     l= "n"
     text="""NSP - это утилита с открытым исходным кодом, предназначен для легального использования в рамках тестирования безопасности.
 Все введенные пользователем данные, включая IP-адреса и учетные записи, строго хранятся локально на компьютере пользователя 
@@ -87,26 +83,19 @@ def disclaimer():
         l=input("Согласится? y[да] n[нет]: ")
         if l == "n":
             exit()
-    log_event("Пользователь согласился")
-
 def first_start():  # Первый запуск программы. Установка компонентов и модулей
-    from Scripts.log import log_event
     disclaimer()
-    log_event("Программа запушена в первые, начинаем настройку...", npt=1)
-    log_event("Установка обновления pip")
-    os.system("python.exe -m pip install --upgrade pip --quiet")
-    log_event("Установка модуля tqdm " )
-    os.system("pip install tqdm --quiet")
+    os.system("py -m pip install --upgrade pip --quiet")
+    os.system("py -m pip install tqdm --quiet")
     from colorama import Fore, Back
     print(Back.BLACK + Fore.YELLOW)
     #cominst()
     print(Fore.GREEN + "Проверка компонентов завершена" + Fore.YELLOW)
-    time.sleep(3)
     cls()
     modules_install()
     print(Fore.GREEN + "Установка модулей завершена" + Fore.YELLOW)
     time.sleep(2)
-
+    os.mkdir("logs")
     main()
 
 
