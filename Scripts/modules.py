@@ -65,7 +65,7 @@ def modules_install():  # Установка моуделй. tqdm уже дол�
     time.sleep(0.5)
     bar = tqdm(listm, desc="Установка модуля", unit="bit")
     for md in bar:
-        os.system(f"py -m pip install {md} --quiet")
+        os.system(f"python -m pip install {md} --quiet")
         bar.set_description(desc=f"Установка {md}")
 
 
@@ -85,12 +85,10 @@ def disclaimer():
             exit()
 def first_start():  # Первый запуск программы. Установка компонентов и модулей
     disclaimer()
-    os.system("py -m pip install --upgrade pip --quiet")
-    os.system("py -m pip install tqdm --quiet")
+    os.system("python -m pip install --upgrade pip --quiet")
+    os.system("python -m pip install tqdm --quiet")
     from colorama import Fore, Back
     print(Back.BLACK + Fore.YELLOW)
-    #cominst()
-    print(Fore.GREEN + "Проверка компонентов завершена" + Fore.YELLOW)
     cls()
     modules_install()
     print(Fore.GREEN + "Установка модулей завершена" + Fore.YELLOW)

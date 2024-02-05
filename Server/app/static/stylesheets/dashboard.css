@@ -3,7 +3,7 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
     height: 100%;
-    background: linear-gradient(to right, #bdc3c7, #2c3e50);
+    background: linear-gradient(to right, #343541, #343541);
     overflow: hidden;
 }
 a{
@@ -15,7 +15,7 @@ a{
     top: 0;
     width: 200px;
     height: 100%;
-    background-color: #343a40;
+    background-color: #202027;
     box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@ a{
     padding: 20px;
     background-color: #808080;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 1);
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.22);
     transform: translateX(100%) scale(0.9);
     opacity: 0;
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
@@ -64,7 +64,7 @@ a{
 
 .top-bar {
 
-    background-color: #343a40;
+    background-color: #202027;
     color: white;
     padding: 10px 20px;
     text-align: right;
@@ -113,14 +113,90 @@ a{
     border: 1px solid #00000000;
     animation: slide-up 1s ease-out;
 }
-
-@keyframes slide-up {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.main-content {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0); /* Semi-transparent background */
+    color: #f0f0f0;
+    box-shadow: 0 0 20px rgba(0,0,0,0);
+    border-radius: 8px;
 }
+
+.content-section {
+    background-color: #202027; /* Dark background color for the section */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#scanForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#scanForm label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #f0f0f0;
+}
+
+#scanForm input[type="text"],
+#scanForm input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #2a2a31; /* Less contrasting border color */
+    background-color: #282830; /* Dark input background */
+    color: #f0f0f0;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#scanForm input[type="button"] {
+    background-color: #33333d; /* Dark button color */
+    color: white;
+    padding: 10px;
+    border: 1px solid #2a2a31; /* Matching border color to inputs */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#scanForm input[type="button"]:hover {
+    background-color: #41414b; /* Lighter shade for hover effect */
+}
+
+#scannerStatus {
+    padding: 10px;
+    background-color: #2a2a31; /* Matching section background */
+    color: #a0a0a0;
+    font-style: italic;
+    border-radius: 5px;
+}
+
+#files-container {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #202027; /* Dark gray background for the container */
+    border-radius: 5px; /* Rounded corners */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, readable font */
+    color: #ccc; /* Light gray text color for readability */
+}
+
+#files-container a {
+    display: block; /* Each link on a new line */
+    color: #4a9a9b; /* Muted teal color for links */
+    text-decoration: none; /* Remove underline */
+    padding: 8px 10px; /* Padding for links */
+    border-radius: 3px; /* Rounded corners for links */
+    transition: background-color 0.3s ease; /* Smooth background color change on hover */
+    border-left: 3px solid #019a9b; /* Add a styled border to the left of links */
+}
+
+#files-container a:hover {
+    background-color: rgba(1, 154, 155, 0.2); /* Semi-transparent teal background on hover */
+    color: #fff; /* Change text color to white on hover for better visibility */
+}
+
+

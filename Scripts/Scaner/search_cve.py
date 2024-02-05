@@ -56,3 +56,30 @@ def scan_db_for_CVE(version):
     affected_cves = find_affected_cves(data, target_version)
     return affected_cves
 
+def get_cve_score(cve_id):
+    file_path=find_path("cve.json")
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+    cve_data = data.get(cve_id)
+    if cve_data:
+        score_text = cve_data[0]  # Например, "Score: 5.0"
+        try:
+            score_value = float(score_text.split(": ")[1])
+            return score_value
+        except (ValueError, IndexError):
+            return None
+    else:
+        return None
+
+def prepare_data(version):
+    data = {}
+    # Предполагаем, что scan_db_for_CVE(version) возвращает список идентификаторов CVE
+    for cve in scan_db_for_CVE(version):
+        # Предполагаем, что get_cve_score(cve) возвращает строку с оценкой уязвимости для данного CVE
+        score = f"Score: {get_cve_score(cve)} "
+        # Создаем строку с ссылкой на дополнительную информацию
+        link = f"More info: https://nvd.nist.gov/vuln/detail/{cve}"
+        # Обновляем словарь data, добавляя информацию о CVE
+        data[cve] = [score, link]
+
+    return data

@@ -7,7 +7,7 @@
 ### Для Linux
    1. Установите python3,pip и git
 
-    sudo apt -y install python3
+    sudo apt -y install python3 && sudo apt install python-is-python3
 
     sudo apt -y install python3-pip
       
@@ -16,6 +16,6 @@
 
     git clone https://github.com/MekoNix/NSP && cd NSP/
 
-   3. Запустите sh скрипт для запуска 
-   
-    sudo ./start.sh
+   3. Запустите sh скрипт для запуска
+
+   chmod +x start.sh && ./start.sh

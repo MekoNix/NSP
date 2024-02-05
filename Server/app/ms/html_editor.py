@@ -1,14 +1,12 @@
 import os
 from datetime import datetime
 
-from Scripts.modules import find_path
-
 # Пример использования:
 # Создание и сохранение HTML-страницы
 # page = HTMLPageModifier("My Web Page")
-# page.add_text_block("This is a small text block.")
+# page.add_text_block("This is a small text block.",font_weight="bold")
 # page.add_large_center_text("This is a large text centered on the page.")
-# page.save_to_file("/path/to/your_file.html")
+# page.save_to_file(find_path("app",ndir=1)+"/test.html")
 
 # Очистка содержимого класса для создания новой страницы
 # page.clear_content()
@@ -16,7 +14,7 @@ from Scripts.modules import find_path
 
 
 class HTMLPageModifier:
-    def __init__(self, title, background_color="#f0f0f0"):
+    def __init__(self, title, background_color="#808080"):
         self.title = title
         self.body_content = []
         self.background_color = background_color
@@ -51,19 +49,19 @@ class HTMLPageModifier:
         </body>
         </html>"""
 
-    def add_text_block(self, text, text_color="#333333"):
-        self.body_content.append(f'<p style="color: {text_color};">{text}</p>')
+    def add_text_block(self, text, text_color="#D3D3D3",font_weight="normal"):
+        self.body_content.append(f'<p style="color: {text_color}; font-weight: {font_weight}">{text}</p>')
 
-    def add_large_center_text(self, text, text_color="#333333"):
+    def add_large_center_text(self, text, text_color="#D3D3D3"):
         self.body_content.append(f'<div class="center-text"><p style="color: {text_color};">{text}</p></div>')
 
-    def add_header(self, scan_host, created_by):
+    def add_header(self, scan_host, created_by, color="#D3D3D3"):
         scan_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         header_content = (
             f"Scan date: {scan_date}<br>Scan host: {scan_host}<br>"
             f"Created by: {created_by}"
         )
-        self.body_content.insert(0, f'<div class="scan-header">{header_content}<hr></div>')
+        self.body_content.insert(0, f'<div class="scan-header" style="color: {color};">{header_content}<hr></div>')
 
     def save_to_file(self, filepath):
         os.makedirs(os.path.dirname(filepath), exist_ok=True)

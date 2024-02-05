@@ -7,7 +7,7 @@ from Server.app.ms.singup import *
 from datetime import datetime
 import os
 from Server.cli.report import create_pdf_report
-
+from Scripts.Scaner.scanner import Scanner
 
 NSP = Flask(__name__)
 NSP.secret_key = "J!#ascva#GFA2444!#SA"
@@ -58,46 +58,33 @@ def signup():
         return render_template('signup.html')
 # BLOCK AUTH END
 #API BLOCK START
-@NSP.route('/api/upload', methods=['POST'])
 @login_required
-def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'message': 'No file part'}), 400
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'message': 'No selected file'}), 400
-    user = current_user.username
-    path = find_path(nroot=1) + f"/Server/Users/profiles/{user}"
-    file_path = os.path.join(path, file.filename)
-    file.save(file_path)
-    return jsonify({'message': 'File uploaded successfully'}), 200
+@NSP.route('/api/get-html-files/<username>')
+def list_html_files(username):
+    user_directory = find_path(f"{username}",ndir=1)
+    try:
+        html_files = [file for file in os.listdir(user_directory) if file.endswith('.html')]
+        return jsonify(html_files)
+    except FileNotFoundError:
+        return jsonify({"error": "User directory not found"}), 404
 
-@NSP.route('/api/download/<filename>', methods=['GET'])
 @login_required
-def download_file(filename):
-    user = current_user.username
-    path = find_path(nroot=1) + f"/Server/Users/profiles/{user}"
-    if not os.path.exists(os.path.join(path, filename)):
-        abort(404)
-    return send_from_directory(path, filename, as_attachment=True)
+@NSP.route('/users/<username>/<filename>')
+def serve_html_file(username,filename):
+    user_directory = find_path(f"{username}",ndir=1)
+    return send_from_directory(user_directory, filename)
 
 #API BLOCK END
 @NSP.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
     user = str(current_user.username)
-
     if request.method == 'POST':
         data = request.json  # data[whattoneed]
-        #ТЕСТОВАЯ key УБРАТЬ НА РЕЛИЗЕ
-        key_value_pairs = {
-            "Host Port": data["host"]+":"+data["port"],
-
-        }
-        wsgi_test(data["host"],user)
+        scanner = Scanner(login=data["login"], password=data["pass"], host=data["host"], port=data["port"], who_req=f"{user}", title=data["host"],comment=data["comment"])
+        scanner.scan()
         return jsonify({"status": "success", "message": "Данные получены"})
-
     return render_template("dashboard.html", username=user)
 
 if __name__ == '__main__':
-    NSP.run()
+    NSP.run(debug=True)
