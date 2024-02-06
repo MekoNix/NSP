@@ -3,31 +3,37 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/dashboard.css') }}">
-    <!-- Перемещение jQuery в <head> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="username" data-username="{{ username }}" style="display: none;"></div>
 
-
     <div class="top-bar">
         <span id="serverTime"></span>
         <div class="user-info" onclick="toggleDropdownMenu()">
-             {{ username }}
+            {{ username }}
             <div class="dropdown-menu">
                 <a href="/logout">Выход</a>
             </div>
         </div>
     </div>
 
+    <div id="chartContainer" style="width:200px; height:200px; position: relative;">
+        <canvas id="myChart" width="200" height="200"></canvas>
+        <div id="noData" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">NODATA</div>
+    </div>
+
     <div class="sidebar">
         <button class="sidebar-button" onclick="toggleSection('scanSection')">Scan</button>
         <button class="sidebar-button" onclick="toggleSection('folderSection')">Folder</button>
+
+        <!-- Новая кнопка для отображения диаграммы -->
+        <button class="sidebar-button" onclick="showChart()">Show Chart</button>
     </div>
 
     <div class="main-content">
         <div id="scanSection" class="content-section">
-            <!-- Форма сканирования -->
             <form id="scanForm">
                 <label for="host">Host:</label>
                 <input type="text" id="host" name="host"><br><br>
@@ -45,12 +51,19 @@
             <p>Scan Section Content</p>
         </div>
         <div id="folderSection" class="content-section">
-            <!-- Контейнер для файлов -->
-            <div id="files-container"></div>
-        </div>
+            <!-- Таблица для отображения файлов -->
+            <table id="files-table">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Дата </th>
+                    </tr>
+                </thead>
+                <tbody id="files-container"></tbody>
+            </table>
+</div>
     </div>
 
-    <!-- Подключение внешних скриптов теперь внутри <body> -->
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
 </html>

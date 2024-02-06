@@ -27,19 +27,13 @@ class Scanner(HTMLPageModifier):
 
             return e
     def scan(self):
-        data=prepare_data(self.version)
+        data=prepare_data(self.version,self.who_req)
         self.report(data)
 
     def report(self,data):
         self.add_header(scan_host=self.host,created_by=self.who_req)
         self.add_text_block(f"Comment: {self.comment}",font_weight="bold")
         self.add_text_block("")
-        # data = {
-        #     f"{self.login}": [f"{self.password}", f"https://{456}.com", "5.7"],
-        #     "Numero 2": ["Description for Numero 2", f"https://{765}.com", "89.7"],
-        #     "Numero 3": ["Description for Numero 3", f"https://{87764}.com", "69.7"]
-        # }
-
         for key, value in data.items():
 
             self.add_text_block(f"{key}",font_weight="bold")

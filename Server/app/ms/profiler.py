@@ -6,19 +6,27 @@ class profiler:
     def __init__(self, filename=None):
         self.filename = filename
         if filename:
-            self.data = self.load_data()
+            self.data=self.load_data()
         else:
-            self.data = {}
+            current_time = datetime.datetime.now()
+            self.data = {
+                "Creation_date": current_time.date().isoformat(),
+                "Last_scan": current_time.isoformat(),
+                "Total_scan": 0,
+                "red": 0,
+                "yellow": 0,
+                "green": 0
+            }
 
     def load_data(self):
         try:
-            with open(self.filename, 'r') as file:
+            with open(self.filename+"/pf.json", 'r') as file:
                 return json.load(file)
         except FileNotFoundError:
             return {}
 
     def save_data(self):
-        with open(self.filename, 'w') as file:
+        with open(self.filename+"/pf.json", 'w') as file:
             json.dump(self.data, file, indent=4)
 
     def update(self, key, new_value):
@@ -32,18 +40,14 @@ class profiler:
                         break
         self.save_data()
 
-    def create_file(self, username):
-        self.filename = find_path(f"{username}",ndir=1)+"/pf.json"
-        current_time = datetime.datetime.now()
-        self.data = {
-            "Creation_date": current_time.date().isoformat(),
-            "Last_scan": current_time.isoformat(),
-            "Total_scan": 0,
-            "red": 0,
-            "yellow": 0,
-            "green": 0
-        }
+    def plus_value(self,key, amount=1):
+        self.load_data()
+        if key in self.data:
+            self.data[key] += amount
+        else:
+            print("Key not found: %s" % key)
         self.save_data()
 
-
-
+    def create_file(self, username):
+        self.filename = find_path(f"{username}",ndir=1)+"/pf.json"
+        self.save_data()

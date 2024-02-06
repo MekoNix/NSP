@@ -198,5 +198,23 @@ a{
     background-color: rgba(1, 154, 155, 0.2); /* Semi-transparent teal background on hover */
     color: #fff; /* Change text color to white on hover for better visibility */
 }
+#data-block {
+        float: right; /* Перемещаем блок в правую сторону */
+        width: 20%; /* Указываем ширину блока */
+        margin-left: 20px; /* Добавляем отступ слева для отделения от диаграммы */
+        padding: 10px; /* Внутренние отступы для содержимого блока */
+        box-sizing: border-box; /* Чтобы padding не увеличивал размер блока */
+    }
 
+    #myChart {
+        display: block; /* Убедимся, что canvas отображается */
+        max-width: 70%; /* Ограничим ширину диаграммы */
+        margin: auto; /* Центрируем диаграмму */
+        height: 400px; /* Высота для canvas, если необходимо */
+    }
+
+    .container {
+        display: flex; /* Используем flexbox для выравнивания элементов */
+        justify-content: space-between; /* Распределение между блоками данных и диаграммой */
+    }
 

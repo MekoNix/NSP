@@ -1,13 +1,9 @@
-import os
-import ctypes
 from Scripts.log import log_event
 from Scripts.modules import *
 import string
 import random
 from datetime import datetime
 from Server.cli.crypto import hash_password,summ_hash
-import threading
-from colorama import Fore,Back
 import shutil
 import os
 import stat

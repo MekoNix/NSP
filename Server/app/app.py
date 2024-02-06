@@ -58,6 +58,13 @@ def signup():
         return render_template('signup.html')
 # BLOCK AUTH END
 #API BLOCK START
+
+@login_required
+@NSP.route('/api/data/<username>/pf')
+def serve_json_file(username):
+    return send_from_directory(find_path(f"{username}",ndir=1), 'pf.json')
+
+
 @login_required
 @NSP.route('/api/get-html-files/<username>')
 def list_html_files(username):

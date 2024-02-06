@@ -2,6 +2,8 @@ import json
 import re
 from packaging import version
 from Scripts.modules import find_path
+from Server.app.ms.profiler import profiler
+
 def load_data_from_json(file_path):
     """Загружает данные из JSON файла."""
     with open(file_path, 'r') as file:
@@ -65,21 +67,27 @@ def get_cve_score(cve_id):
         score_text = cve_data[0]  # Например, "Score: 5.0"
         try:
             score_value = float(score_text.split(": ")[1])
+
             return score_value
         except (ValueError, IndexError):
             return None
     else:
         return None
 
-def prepare_data(version):
+def score_analys(who_req,score):
+    p=profiler(find_path(f"{who_req}",ndir=1))
+    if score>7.0:
+        p.plus_value(key="red",amount=1)
+    if 7.0<score>4.0:
+        p.plus_value(key="yellow",amount=1)
+    else:
+        p.plus_value(key="green",amount=1)
+def prepare_data(version,who_req):
     data = {}
-    # Предполагаем, что scan_db_for_CVE(version) возвращает список идентификаторов CVE
     for cve in scan_db_for_CVE(version):
-        # Предполагаем, что get_cve_score(cve) возвращает строку с оценкой уязвимости для данного CVE
+        score_analys(who_req,get_cve_score(cve))
         score = f"Score: {get_cve_score(cve)} "
-        # Создаем строку с ссылкой на дополнительную информацию
         link = f"More info: https://nvd.nist.gov/vuln/detail/{cve}"
-        # Обновляем словарь data, добавляя информацию о CVE
         data[cve] = [score, link]
 
     return data

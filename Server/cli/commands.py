@@ -3,6 +3,7 @@ from Server.cli.server_modules import *
 from colorama import Fore,Back
 from datetime import *
 from Server.app.ms.killer import *
+from Server.app.ms.profiler import profiler
 
 logo=Fore.YELLOW + Back.BLACK + """
     ███╗   ██╗███████╗██████╗ 
@@ -36,7 +37,9 @@ def add_user(createby='console',AcccessLevel='user',pas=generate_password(12)):
     users_data = user_data
     # Сохраняем данные в JSON-файл
     add_to_json(find_path(nroot=1)+'/Server/Users/db/users.json',users_data)
-     
+    pr = profiler()
+    pr.create_file(str(username))
+
 
 def clear():
     cls()
