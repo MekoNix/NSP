@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/dashboard.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </head>
 <body>
     <div id="username" data-username="{{ username }}" style="display: none;"></div>
@@ -19,21 +20,22 @@
         </div>
     </div>
 
-    <div id="chartContainer" style="width:200px; height:200px; position: relative;">
-        <canvas id="myChart" width="200" height="200"></canvas>
-        <div id="noData" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">NODATA</div>
-    </div>
 
     <div class="sidebar">
         <button class="sidebar-button" onclick="toggleSection('scanSection')">Scan</button>
         <button class="sidebar-button" onclick="toggleSection('folderSection')">Folder</button>
+         <button class="sidebar-button" onclick="toggleSection('chartSection')">Show Chart</button>
 
-        <!-- Новая кнопка для отображения диаграммы -->
-        <button class="sidebar-button" onclick="showChart()">Show Chart</button>
+
     </div>
 
-    <div class="main-content">
-        <div id="scanSection" class="content-section">
+    <div class="main-content" style="display: block">
+        <div id="chartContainer" >
+                <canvas id="myChart" width="400" height="400"></canvas>
+                <div id="info">Информация...</div>
+                <div id="noData" style="display: none;">NODATA</div>
+            </div>
+        <div id="scanSection" class="content-section" style="display: none;">
             <form id="scanForm">
                 <label for="host">Host:</label>
                 <input type="text" id="host" name="host"><br><br>
@@ -48,9 +50,8 @@
                 <input type="button" value="Submit" onclick="submitForm()">
                 <div id="scannerStatus"></div>
             </form>
-            <p>Scan Section Content</p>
         </div>
-        <div id="folderSection" class="content-section">
+        <div id="folderSection" class="content-section" style="display: none;">
             <!-- Таблица для отображения файлов -->
             <table id="files-table">
                 <thead>
@@ -61,9 +62,9 @@
                 </thead>
                 <tbody id="files-container"></tbody>
             </table>
-</div>
+            </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
 </body>
 </html>

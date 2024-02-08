@@ -3,7 +3,7 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
     height: 100%;
-    background: linear-gradient(to right, #343541, #343541);
+    background: linear-gradient(to right, #171717, #171717);
     overflow: hidden;
 }
 a{
@@ -40,26 +40,29 @@ a{
 }
 
 .main-content {
-    margin-left: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Занимает полную высоту видимой части экрана */
+    margin-left: 200px; /* Сохраняем отступ для сайдбара */
     padding: 20px;
+    box-sizing: border-box; /* Включаем padding в общую высоту и ширину */
 }
 
-
 .content-section {
-    display: none;
+    display: none; /* Изначально скрыты */
     padding: 20px;
     background-color: #808080;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(255, 255, 255, 0.22);
-    transform: translateX(100%) scale(0.9);
-    opacity: 0;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    /* Убираем transform, opacity и transition, если они еще указаны */
 }
 
 .content-section.active {
-    display: block;
-    opacity: 1;
-    transform: translateX(0) scale(1);
+    display: flex; /* Показываем активный раздел */
+    flex-direction: column; /* Содержимое раздела организуем в столбец */
+    align-items: center; /* Центрируем содержимое раздела по горизонтали */
+    justify-content: center; /* Центрируем содержимое раздела по вертикали */
 }
 
 .top-bar {
@@ -90,16 +93,6 @@ a{
     text-decoration: None;
 }
 
-.avatar-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-image: url('/static/img/avatar.png');
-    background-size: cover;
-    background-position: center;
-    margin-right: 10px; /* Добавляем отступ справа */
-}
-
 
 .serverTime {
     color: white;
@@ -113,23 +106,7 @@ a{
     border: 1px solid #00000000;
     animation: slide-up 1s ease-out;
 }
-.main-content {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0); /* Semi-transparent background */
-    color: #f0f0f0;
-    box-shadow: 0 0 20px rgba(0,0,0,0);
-    border-radius: 8px;
-}
 
-.content-section {
-    background-color: #202027; /* Dark background color for the section */
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
 
 #scanForm {
     display: flex;
@@ -195,7 +172,7 @@ a{
 }
 
 #files-container a:hover {
-    background-color: rgba(1, 154, 155, 0.2); /* Semi-transparent teal background on hover */
+    background-color: rgba(0, 119, 120, 0.2); /* Semi-transparent teal background on hover */
     color: #fff; /* Change text color to white on hover for better visibility */
 }
 #data-block {
@@ -218,3 +195,30 @@ a{
         justify-content: space-between; /* Распределение между блоками данных и диаграммой */
     }
 
+.chartContainer {
+    display: flex; /* Продолжаем использовать flexbox для выравнивания */
+    flex-direction: column; /* Меняем направление на вертикальное */
+    align-items: center; /* Выравниваем содержимое по центру по горизонтали */
+    justify-content: center; /* Центрируем содержимое по вертикали */
+    height: 12vh; /* Высота контейнера, чтобы он занимал всю видимую часть экрана */
+}
+
+#info {
+
+    width: 80%; /* Ширина блока с информацией, чтобы он был немного уже, чем диаграмма */
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px; /* Внутренние отступы */
+    margin-bottom: 20px; /* Отступ снизу до диаграммы */
+    background-color: #333; /* Цвет фона для блока с информацией */
+    color: #fff; /* Цвет текста */
+    border-radius: 8px; /* Скругление углов */
+    text-align: center; /* Центрирование текста внутри блока */
+}
+
+canvas {
+    max-width: 60%; /* Уменьшаем ширину диаграммы на треть */
+    aspect-ratio: 1; /* Сохраняем аспектное соотношение */
+    margin: auto; /* Автоматические отступы для центрирования */
+}

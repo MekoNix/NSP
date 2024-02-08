@@ -30,7 +30,7 @@ class profiler:
             json.dump(self.data, file, indent=4)
 
     def update(self, key, new_value):
-        self.data["Last_scan"] = datetime.datetime.now().isoformat()
+        self.data["Last_scan"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if key in self.data:
             self.data[key] = new_value
         else:
@@ -49,5 +49,5 @@ class profiler:
         self.save_data()
 
     def create_file(self, username):
-        self.filename = find_path(f"{username}",ndir=1)+"/pf.json"
+        self.filename = find_path(f"{username}",ndir=1)
         self.save_data()
