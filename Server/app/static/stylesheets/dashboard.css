@@ -1,0 +1,241 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background: linear-gradient(to right, #343541, #343541);
+    overflow: hidden;
+}
+a{
+    text-decoration: None;
+}
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #202027;
+    box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.sidebar-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+}
+
+.sidebar-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.main-content {
+    margin-left: 200px;
+    padding: 20px;
+}
+
+
+.content-section {
+    display: none;
+    padding: 20px;
+    background-color: #808080;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.22);
+    transform: translateX(100%) scale(0.9);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.content-section.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.top-bar {
+
+    background-color: #202027;
+    color: white;
+    padding: 10px 20px;
+    text-align: right;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #626264;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    text-align: left;
+    text-decoration: None;
+}
+
+.avatar-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-image: url('/static/img/avatar.png');
+    background-size: cover;
+    background-position: center;
+    margin-right: 10px; /* Добавляем отступ справа */
+}
+
+
+.serverTime {
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+
+}
+.file-block {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #00000000;
+    animation: slide-up 1s ease-out;
+}
+.main-content {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0); /* Semi-transparent background */
+    color: #f0f0f0;
+    box-shadow: 0 0 20px rgba(0,0,0,0);
+    border-radius: 8px;
+}
+
+.content-section {
+    background-color: #202027; /* Dark background color for the section */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#scanForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#scanForm label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #f0f0f0;
+}
+
+#scanForm input[type="text"],
+#scanForm input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #2a2a31; /* Less contrasting border color */
+    background-color: #282830; /* Dark input background */
+    color: #f0f0f0;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#scanForm input[type="button"] {
+    background-color: #33333d; /* Dark button color */
+    color: white;
+    padding: 10px;
+    border: 1px solid #2a2a31; /* Matching border color to inputs */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#scanForm input[type="button"]:hover {
+    background-color: #41414b; /* Lighter shade for hover effect */
+}
+
+#scannerStatus {
+    padding: 10px;
+    background-color: #2a2a31; /* Matching section background */
+    color: #a0a0a0;
+    font-style: italic;
+    border-radius: 5px;
+}
+
+#files-container {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #202027; /* Dark gray background for the container */
+    border-radius: 5px; /* Rounded corners */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, readable font */
+    color: #ccc; /* Light gray text color for readability */
+}
+
+#files-container a {
+    display: block; /* Each link on a new line */
+    color: #4a9a9b; /* Muted teal color for links */
+    text-decoration: none; /* Remove underline */
+    padding: 8px 10px; /* Padding for links */
+    border-radius: 3px; /* Rounded corners for links */
+    transition: background-color 0.3s ease; /* Smooth background color change on hover */
+    border-left: 3px solid #019a9b; /* Add a styled border to the left of links */
+}
+
+#files-container a:hover {
+    background-color: rgba(1, 154, 155, 0.2); /* Semi-transparent teal background on hover */
+    color: #fff; /* Change text color to white on hover for better visibility */
+}
+#data-block {
+        float: right; /* Перемещаем блок в правую сторону */
+        width: 20%; /* Указываем ширину блока */
+        margin-left: 20px; /* Добавляем отступ слева для отделения от диаграммы */
+        padding: 10px; /* Внутренние отступы для содержимого блока */
+        box-sizing: border-box; /* Чтобы padding не увеличивал размер блока */
+    }
+
+    #myChart {
+        display: block; /* Убедимся, что canvas отображается */
+        max-width: 70%; /* Ограничим ширину диаграммы */
+        margin: auto; /* Центрируем диаграмму */
+        height: 400px; /* Высота для canvas, если необходимо */
+    }
+
+    .container {
+        display: flex; /* Используем flexbox для выравнивания элементов */
+        justify-content: space-between; /* Распределение между блоками данных и диаграммой */
+    }
+
+#chartContainer {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+#info {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+canvas {
+    display: block;
+    max-width: 400px;
+    max-height: 400px;
+}
