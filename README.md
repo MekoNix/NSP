@@ -19,3 +19,6 @@
    3. Запустите sh скрипт для запуска
 
    chmod +x start.sh && ./start.sh
+
+# Веб интерфейс 
+Перейдите на http://localhost:8080/login
