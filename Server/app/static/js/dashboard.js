@@ -121,7 +121,7 @@ function submitForm() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            document.getElementById('scannerStatus').textContent = $"Сканер заврешил работу перейдите в секцию folder ";
+            document.getElementById('scannerStatus').textContent = "Сканер заврешил работу перейдите в секцию folder ";
         })
         .catch((error) => {
             console.error('Error:', error);

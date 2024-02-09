@@ -113,3 +113,6 @@ def dashboard():
         scanner.scan()
         return jsonify({"status": "success", "message": "Данные получены"})
     return render_template("dashboard.html", username=user)
+
+if __name__ == '__main__':
+    NSP.run(debug=True)

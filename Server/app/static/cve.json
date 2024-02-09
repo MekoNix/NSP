@@ -1,3 +1,245 @@
 {
-  "error": "HTTPSConnectionPool(host='www.mongodb.com', port=443): Max retries exceeded with url: /alerts (Caused by ProxyError('Cannot connect to proxy.', NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x0000013A40BF4350>: Failed to establish a new connection: [WinError 10061] \u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u043d\u0435 \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u043e, \u0442.\u043a. \u043a\u043e\u043d\u0435\u0447\u043d\u044b\u0439 \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440 \u043e\u0442\u0432\u0435\u0440\u0433 \u0437\u0430\u043f\u0440\u043e\u0441 \u043d\u0430 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435')))"
+  "CVE-2023-0437": [
+    "Score: 5.3",
+    "1.0.0 affects versions prior to 1.25.0"
+  ],
+  "CVE-2023-0436": [
+    "Score: 4.5",
+    "1.5.0 affects 1.7.0 and prior versions"
+  ],
+  "CVE-2021-32050": [
+    "Score: 4.2",
+    "1.0.0 affects versions prior to 1.17.7"
+  ],
+  "CVE-2023-1409": [
+    "Score: 5.3",
+    "6.3 affects 6.3.2 and prior versions",
+    "5.0 affects 5.0.14 and prior versions",
+    "4.4 affects 4.4.23 and prior versions"
+  ],
+  "CVE-2023-4009": [
+    "Score: 7.2",
+    "In MongoDB Ops Manager v5.0 prior to 5.0.22 and v6.0 prior to 6.0.17 it is possible for an...",
+    "6.0 affects versions prior to 6.0.17",
+    "5.0 affects versions prior to 5.0.22"
+  ],
+  "CVE-2023-0342": [
+    "Score: 3.1",
+    "v5.0 affects versions prior to 5.0.21",
+    "v6.0 affects versions prior to 6.0.12"
+  ],
+  "CVE-2022-48282": [
+    "Score: 6.6",
+    "0 affects v2.18.0 and prior versions"
+  ],
+  "CVE-2022-24272": [
+    "Score: 6.5",
+    "5.0 affects 5.0.6 and prior versions"
+  ],
+  "CVE-2021-32040": [
+    "Score: 6.5",
+    "5.0 affects versions prior to 5.0.4",
+    "4.4 affects versions prior to 4.4.11",
+    "4.2 affects versions prior to 4.2.16"
+  ],
+  "CVE-2021-32036": [
+    "Score: 5.4",
+    "5.0 affects 5.0.3 and prior versions",
+    "4.4 affects 4.4.9 and prior versions",
+    "4.2 affects 4.2.16 and prior versions",
+    "4.0 affects 4.0.28 and prior versions"
+  ],
+  "CVE-2021-32039": [
+    "Score: 5.5",
+    "MongoDB for VS Code affects 0.7.0 and prior versions"
+  ],
+  "CVE-2021-20330": [
+    "Score: 6.5",
+    "4.0 affects versions prior to 4.0.27",
+    "4.2 affects versions prior to 4.2.16",
+    "4.4 affects versions prior to 4.4.9"
+  ],
+  "CVE-2021-32037": [
+    "Score: 6.5",
+    "5.0 affects 5.0.2 and prior versions"
+  ],
+  "CVE-2021-20332": [
+    "Score: 4.2",
+    "2.0.0-alpha",
+    "2.0.0-alpha1",
+    "1.0.0 affects 1.2.1 and prior versions"
+  ],
+  "CVE-2021-20333": [
+    "Score: 5.3",
+    "3.6 affects versions prior to 3.6.20",
+    "4.0 affects versions prior to 4.0.21",
+    "4.2 affects versions prior to 4.2.10"
+  ],
+  "CVE-2021-20329": [
+    "Score: 6.8",
+    "1.0 affects 1.5.0 and prior versions"
+  ],
+  "CVE-2021-20331": [
+    "Score: 4.2",
+    "2.12 affects 2.12.1 and prior versions"
+  ],
+  "CVE-2021-20326": [
+    "Score: 6.5",
+    "4.4 affects versions prior to 4.4.4"
+  ],
+  "CVE-2020-7924": [
+    "Score: 4.2",
+    "3.6.5 affects versions prior to 3.6*",
+    "4.0 affects versions prior to 4.0.21",
+    "4.2 affects versions prior to 4.2.11",
+    "100 affects versions prior to 100.2.0"
+  ],
+  "CVE-2021-20334": [
+    "Score: 4.8",
+    "1.3.0 affects versions prior to 1.x*"
+  ],
+  "CVE-2020-7929": [
+    "Score: 6.5",
+    "3.6 affects versions prior to 3.6.21",
+    "4.0 affects versions prior to 4.0.20"
+  ],
+  "CVE-2018-25004": [
+    "Score: 4.9",
+    "3.6 affects versions prior to 3.6.11",
+    "4.0 affects versions prior to 4.0.6"
+  ],
+  "CVE-2021-20327": [
+    "Score: 6.4",
+    "1.2.0"
+  ],
+  "CVE-2021-20328": [
+    "Score: 6.4",
+    "3.11 affects 3.11.2 and prior versions",
+    "3.12 affects 3.12.7 and prior versions"
+  ],
+  "CVE-2021-20335": [
+    "Score: 6.7",
+    "For MongoDB Ops Manager <= 4.2.24 with multiple OM application servers, that have SSL turn...",
+    "4.2 affects 4.2.24 and prior versions"
+  ],
+  "CVE-2019-20924": [
+    "Score: 6.5",
+    "4.2 affects versions prior to 4.2.2"
+  ],
+  "CVE-2020-7925": [
+    "Score: 7.5",
+    "4.2 affects versions prior to 4.2.9",
+    "4.4 affects versions prior to 4.4.0-rc12"
+  ],
+  "CVE-2020-7926": [
+    "Score: 6.5",
+    "4.4 affects versions prior to 4.4.1"
+  ],
+  "CVE-2020-7927": [
+    "Score: 8.1",
+    "4.2 affects 4.2.17 and prior versions",
+    "4.3 affects 4.3.9 and prior versions",
+    "4.4 affects 4.4.2 and prior versions"
+  ],
+  "CVE-2019-2392": [
+    "Score: 6.5",
+    "3.6 affects versions prior to 3.6.20",
+    "4.0 affects versions prior to 4.0.20",
+    "4.2 affects versions prior to 4.2.9",
+    "4.4 affects versions prior to 4.4.1"
+  ],
+  "CVE-2019-2393": [
+    "Score: 6.5",
+    "3.6 affects versions prior to 3.6.15",
+    "4.0 affects versions prior to 4.0.13",
+    "4.2 affects versions prior to 4.2.1"
+  ],
+  "CVE-2019-20923": [
+    "Score: 6.5",
+    "4.0 affects versions prior to 4.0.7"
+  ],
+  "CVE-2018-20802": [
+    "Score: 6.5",
+    "3.6 affects versions prior to 3.6.9",
+    "4.0 affects versions prior to 4.0.3"
+  ],
+  "CVE-2018-20804": [
+    "Score: 6.5",
+    "3.6 affects versions prior to 3.6.13",
+    "4.0 affects versions prior to 4.0.10"
+  ],
+  "CVE-2018-20805": [
+    "Score: 6.5",
+    "3.6 affects versions prior to 3.6.10",
+    "4.0 affects versions prior to 4.0.5"
+  ],
+  "CVE-2019-20925": [
+    "Score: 7.5",
+    "4.2 affects versions prior to 4.2.1",
+    "4.0 affects versions prior to 4.0.13",
+    "3.6 affects versions prior to 3.6.15",
+    "3.4 affects versions prior to 3.4.24"
+  ],
+  "CVE-2020-7928": [
+    "Score: 6.5",
+    "4.4 affects versions prior to 4.4.1",
+    "4.2 affects versions prior to 4.2.9",
+    "4.0 affects versions prior to 4.0.20",
+    "3.6 affects versions prior to 3.6.20"
+  ],
+  "CVE-2018-20803": [
+    "Score: 6.5",
+    "4.0 affects versions prior to 4.0.5",
+    "3.6 affects versions prior to 3.6.10",
+    "3.4 affects versions prior to 3.4.19"
+  ],
+  "CVE-2020-7923": [
+    "Score: 6.5",
+    "4.4 affects versions prior to 4.4.0-rc7",
+    "4.2 affects versions prior to 4.2.8",
+    "4.0 affects versions prior to 4.0.19"
+  ],
+  "CVE-2019-2388": [
+    "Score: 5.8",
+    "4.0.9",
+    "4.0.10",
+    "4.1.5"
+  ],
+  "CVE-2020-7921": [
+    "Score: 4.6",
+    "4.2 affects versions prior to 4.2.3",
+    "4.0 affects versions prior to 4.0.15",
+    "3.6 affects versions prior to 3.6.18",
+    "4.3 affects versions prior to 4.3.3"
+  ],
+  "CVE-2020-7922": [
+    "Score: 6.4",
+    "1.0",
+    "1.1",
+    "1.2 affects 1.2.4 and prior versions",
+    "1.3 affects 1.3.1 and prior versions",
+    "1.4 affects 1.4.4 and prior versions"
+  ],
+  "CVE-2019-2391": [
+    "Score: 4.2",
+    "1.0 affects 1.1.3 and prior versions"
+  ],
+  "CVE-2019-2389": [
+    "Score: 5.3",
+    "4.0 affects versions prior to 4.0.11",
+    "3.6 affects versions prior to 3.6.14",
+    "3.4 affects versions prior to 3.4.22"
+  ],
+  "CVE-2019-2390": [
+    "Score: 8.2",
+    "4.0 affects versions prior to 4.0.11",
+    "3.6 affects versions prior to 3.6.14",
+    "3.4 affects versions prior to 3.4.22"
+  ],
+  "CVE-2019-2386": [
+    "Score: 7.1",
+    "4.0 affects versions prior to 4.0.9",
+    "3.6 affects versions prior to 3.6.13",
+    "3.4 affects versions prior to 3.4.22"
+  ]
 }
