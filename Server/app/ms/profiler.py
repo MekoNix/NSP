@@ -2,7 +2,7 @@ import json
 import datetime
 from Scripts.modules import find_path
 
-class profiler:
+class profiler():
     def __init__(self, filename=None):
         self.filename = filename
         if filename:

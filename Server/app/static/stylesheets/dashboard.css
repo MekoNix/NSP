@@ -52,7 +52,7 @@ a{
 .content-section {
     display: none; /* Изначально скрыты */
     padding: 20px;
-    background-color: #808080;
+    background-color: #171717;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(255, 255, 255, 0.22);
     /* Убираем transform, opacity и transition, если они еще указаны */
@@ -111,6 +111,7 @@ a{
 #scanForm {
     display: flex;
     flex-direction: column;
+    background-color: #171717
 }
 
 #scanForm label {
@@ -155,7 +156,7 @@ a{
 #files-container {
     margin: 20px 0;
     padding: 10px;
-    background-color: #202027; /* Dark gray background for the container */
+    background-color: #171717; /* Dark gray background for the container */
     border-radius: 5px; /* Rounded corners */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, readable font */
     color: #ccc; /* Light gray text color for readability */
@@ -221,4 +222,11 @@ canvas {
     max-width: 60%; /* Уменьшаем ширину диаграммы на треть */
     aspect-ratio: 1; /* Сохраняем аспектное соотношение */
     margin: auto; /* Автоматические отступы для центрирования */
+}
+
+.scanSection{
+    backgroundcolor: #171717
+}
+.files-table{
+
 }

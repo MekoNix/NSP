@@ -21,6 +21,8 @@ def ch():
     initialize_application()
     cls()
     print(logo)
+    print("")
+    print("Server started at localhost:8080")
     user = "Admin"
     user_changed = False
 

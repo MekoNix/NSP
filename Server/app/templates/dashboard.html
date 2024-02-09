@@ -12,9 +12,9 @@
 
     <div class="top-bar">
         <span id="serverTime"></span>
-        <div class="user-info" onclick="toggleDropdownMenu()">
+        <div class="user-info" onclick="logout()">
             {{ username }}
-            <div class="dropdown-menu">
+            <div class="dropdown-menu" style="display: none">
                 <a href="/logout">Выход</a>
             </div>
         </div>
@@ -24,7 +24,7 @@
     <div class="sidebar">
         <button class="sidebar-button" onclick="toggleSection('scanSection')">Scan</button>
         <button class="sidebar-button" onclick="toggleSection('folderSection')">Folder</button>
-         <button class="sidebar-button" onclick="toggleSection('chartSection')">Show Chart</button>
+         <button class="sidebar-button" onclick="toggleSection('chartContainer')">Show Chart</button>
 
 
     </div>
@@ -53,11 +53,12 @@
         </div>
         <div id="folderSection" class="content-section" style="display: none;">
             <!-- Таблица для отображения файлов -->
-            <table id="files-table">
+            <table id="files-table" style="color:#ffffff " >
                 <thead>
                     <tr>
                         <th>Название</th>
                         <th>Дата </th>
+                        <th>Скачать в pdf</th>
                     </tr>
                 </thead>
                 <tbody id="files-container"></tbody>

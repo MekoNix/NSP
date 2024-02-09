@@ -4,10 +4,10 @@ from flask_login import *
 from Server.app.ms.login import *
 from Server.app.ms.WSGI import *
 from Server.app.ms.singup import *
-from datetime import datetime
 import os
-from Server.cli.report import create_pdf_report
 from Scripts.Scaner.scanner import Scanner
+import subprocess
+
 
 NSP = Flask(__name__)
 NSP.secret_key = "J!#ascva#GFA2444!#SA"
@@ -64,14 +64,17 @@ def signup():
 def serve_json_file(username):
     return send_from_directory(find_path(f"{username}",ndir=1), 'pf.json')
 
-
 @login_required
 @NSP.route('/api/get-html-files/<username>')
 def list_html_files(username):
-    user_directory = find_path(f"{username}",ndir=1)
+    user_directory = find_path(f"{username}", ndir=1)
     try:
+        files_info = []
         html_files = [file for file in os.listdir(user_directory) if file.endswith('.html')]
-        return jsonify(html_files)
+        for html_file in html_files:
+            birthday = get_birthday_file(html_file, username)
+            files_info.append({"name": html_file, "birthday": birthday})
+        return jsonify(files_info)
     except FileNotFoundError:
         return jsonify({"error": "User directory not found"}), 404
 
@@ -80,6 +83,24 @@ def list_html_files(username):
 def serve_html_file(username,filename):
     user_directory = find_path(f"{username}",ndir=1)
     return send_from_directory(user_directory, filename)
+
+
+@login_required
+@NSP.route('/api/download-pdf/<username>/<filename>')
+def download_pdf(username, filename):
+    html_file_path = find_path(f"{username}", ndir=1) + f'/{filename}'
+    pdf_file_path = html_file_path.replace('.html', '.pdf')
+    filename=filename.replace(".html",'.pdf')
+    # Определяем URL, который нужно преобразовать в PDF
+
+    # Вызываем скрипт pdf_generator.py с помощью subprocess
+    subprocess.run(["python", find_path("html_to_pdf.py"), html_file_path, pdf_file_path])
+    # Отправляем файл
+    return send_from_directory(find_path(f"{username}",ndir=1),filename)
+
+    # Отправляем файл
+    return send_from_directory(pdf_file_path, filename)
+
 
 #API BLOCK END
 @NSP.route("/dashboard", methods=['GET', 'POST'])
@@ -92,6 +113,3 @@ def dashboard():
         scanner.scan()
         return jsonify({"status": "success", "message": "Данные получены"})
     return render_template("dashboard.html", username=user)
-
-if __name__ == '__main__':
-    NSP.run(debug=True)

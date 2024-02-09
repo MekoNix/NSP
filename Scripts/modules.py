@@ -61,7 +61,7 @@ def cominst():  # Проверка компонентов
 # =======================================================================================================================
 def modules_install():  # Установка моуделй. tqdm уже должен быть установлен
     from tqdm import tqdm
-    listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4','reportlab','bcrypt','cryptography','waitress','gunicorn',"pymetasploit3","flask-login"]
+    listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4','reportlab','bcrypt','cryptography','waitress','gunicorn',"pymetasploit3","flask-login","pyppeteer"]
     time.sleep(0.5)
     bar = tqdm(listm, desc="Установка модуля", unit="bit")
     for md in bar:

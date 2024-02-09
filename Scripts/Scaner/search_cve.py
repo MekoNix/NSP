@@ -10,13 +10,10 @@ def load_data_from_json(file_path):
         data = json.load(file)
     return data
 
-import json
-import re
-from packaging import version
-
 def find_affected_cves(data, target_version):
     affected_cves = []
-    version_pattern = re.compile(r'(\d+\.\d+)(\.\d+)? (\w+ versions prior to (\d+\.\d+\.\d+)|and prior versions)')
+    # Обновленный шаблон для поиска информации о версиях
+    version_pattern = re.compile(r'(\d+\.\d+\.\d+) (affects|and prior versions)')
 
     try:
         target_ver = version.parse(target_version)
@@ -26,20 +23,18 @@ def find_affected_cves(data, target_version):
 
     for cve, versions_info in data.items():
         for version_info in versions_info:
-            if 'and prior versions' in version_info:
-                base_version = version_info.split(' ')[0]
-                try:
-                    if target_ver <= version.parse(base_version):
-                        affected_cves.append(cve)
-                        break
-                except version.InvalidVersion:
-                    continue  # Пропускаем невалидные версии
-
             match = version_pattern.search(version_info)
             if match:
-                _, _, _, version_to_compare = match.groups()
+                base_version, relation = match.groups()
                 try:
-                    if version_to_compare and target_ver < version.parse(version_to_compare):
+                    base_ver = version.parse(base_version)
+                    # Если уязвимость относится к версии равной или более новой, чем целевая версия,
+                    # и указано, что она влияет на предыдущие версии, добавляем CVE в список
+                    if target_ver <= base_ver and relation == 'and prior versions':
+                        affected_cves.append(cve)
+                        break
+                    elif relation == 'affects' and target_ver == base_ver:
+                        # Если уязвимость явно указывает на целевую версию
                         affected_cves.append(cve)
                         break
                 except version.InvalidVersion:
@@ -75,7 +70,7 @@ def get_cve_score(cve_id):
         return None
 
 def score_analys(who_req,score):
-    p=profiler(find_path(f"{who_req}",ndir=1))
+    p = profiler(find_path(f"{who_req}", ndir=1))
     if score>7.0:
         p.plus_value(key="red",amount=1)
     if 7.0<score>4.0:
@@ -84,7 +79,14 @@ def score_analys(who_req,score):
         p.plus_value(key="green",amount=1)
 def prepare_data(version,who_req):
     data = {}
+    p = profiler(find_path(f"{who_req}", ndir=1))
+    p.plus_value(key="Total_scan", amount=1)
+
+    if scan_db_for_CVE(version) == []:
+        data="CVE NOT FOUND"
+        return data
     for cve in scan_db_for_CVE(version):
+
         score_analys(who_req,get_cve_score(cve))
         score = f"Score: {get_cve_score(cve)} "
         link = f"More info: https://nvd.nist.gov/vuln/detail/{cve}"

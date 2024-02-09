@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 from Server.cli.crypto import hash_password,summ_hash
 import shutil
-import os
+import os,platform
 import stat
 
 
