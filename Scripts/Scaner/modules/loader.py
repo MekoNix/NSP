@@ -1,20 +1,22 @@
 import importlib.util
 import os
 
+
 class Mod:
-    def __init__(self,host,login,pas,port,who_req):
-        self.host=host
-        self.login=login
-        self.pas=pas
-        self.port=port
-        self.who_req=who_req
-    def load_module(self,module_name, path):
+    def __init__(self, host, login, pas, port, who_req):
+        self.host = host
+        self.login = login
+        self.pas = pas
+        self.port = port
+        self.who_req = who_req
+
+    def load_module(self, module_name, path):
         spec = importlib.util.spec_from_file_location(module_name, path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module
 
-    def survey_modules(self,):
+    def survey_modules(self, ):
         # Определяем абсолютный путь к директории скрипта
         script_dir = os.path.dirname(os.path.realpath(__file__))
         # Строим путь к папке modules
@@ -29,7 +31,7 @@ class Mod:
                 module = self.load_module(module_name, path)
 
                 if hasattr(module, 'get_text') and callable(module.get_text):
-                    text_output = module.get_text(self.host,self.login,self.pas,self.port,self.who_req)
+                    text_output = module.get_text(self.host, self.login, self.pas, self.port, self.who_req)
                     # Разделяем вывод на отдельные строки
                     separated_output = text_output.strip().split('\n')
                     # Сохраняем список строк вместо одной длинной строки

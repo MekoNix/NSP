@@ -2,12 +2,13 @@ import time
 
 from Scripts.modules import *
 from threading import Thread
-from Server.app.app import NSP,create_db
+from Server.app.app import NSP, create_db
 from Server.app.ms.WSGI import WSGI
 from colorama import *
 from Server.cli.server_modules import *
 from Server.cli.commands import logo
 from Server.app.ms.Update_CVE import *
+
 
 def ch():
     global User
@@ -34,10 +35,6 @@ def ch():
         command_input = input(f"{user}@localhost: ")
         command, *args = command_input.split()
         user, user_changed = command_handler(command, user, *args)
-
-
-
-
 
 
 def mainserv():

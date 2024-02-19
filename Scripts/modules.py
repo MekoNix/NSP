@@ -1,4 +1,3 @@
-
 import os
 import time
 import json
@@ -15,7 +14,8 @@ def cls():  # Модуль отчистки командной строки
 # БЛОК ПРОВЕРОК
 # ----------------------------------------------------------------------------------------------------------------------
 
-def first_start_check():  # Проверка на папку logs если программа уже запускалась logs будет существовать, если нет то программа создаст её и начнёт загрузку компонентов
+def first_start_check():  # Проверка на папку logs если программа уже запускалась logs будет существовать, если нет
+    # то программа создаст её и начнёт загрузку компонентов
     if not os.path.exists("logs"):
 
         first_start()
@@ -50,9 +50,9 @@ def server_ping(host):
 
 def cominst():  # Проверка компонентов
     from Scripts.log import log_event
-    log_event("Проверка nmap",npt=1)
+    log_event("Проверка nmap", npt=1)
     nmapc()
-    log_event("Проверка интернета",npt=1)
+    log_event("Проверка интернета", npt=1)
     internet_con()
 
 
@@ -61,7 +61,8 @@ def cominst():  # Проверка компонентов
 # =======================================================================================================================
 def modules_install():  # Установка моуделй. tqdm уже должен быть установлен
     from tqdm import tqdm
-    listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4','reportlab','bcrypt','cryptography','waitress','gunicorn',"pymetasploit3","flask-login","pyppeteer"]
+    listm = ["tqdm", 'colorama', 'requests', 'flask', 'fpdf', 'python-nmap', 'pymongo', 'bs4', 'reportlab', 'bcrypt',
+             'cryptography', 'waitress', 'gunicorn', "pymetasploit3", "flask-login", "pyppeteer"]
     time.sleep(0.5)
     bar = tqdm(listm, desc="Установка модуля", unit="bit")
     for md in bar:
@@ -73,16 +74,17 @@ def modules_install():  # Установка моуделй. tqdm уже дол�
 # БЛОК МОДУЛЕЙ
 
 def disclaimer():
-    l= "n"
-    text="""NSP - это утилита с открытым исходным кодом, предназначен для легального использования в рамках тестирования безопасности.
-Все введенные пользователем данные, включая IP-адреса и учетные записи, строго хранятся локально на компьютере пользователя 
-и не передаются разработчикам или третьим лицам.
-            """
+    l = "n"
+    text = """NSP - это утилита с открытым исходным кодом, предназначен для легального использования в рамках 
+    тестирования безопасности. Все введенные пользователем данные, включая IP-адреса и учетные записи, 
+    строго хранятся локально на компьютере пользователя и не передаются разработчикам или третьим лицам."""
     print(text)
     while l != "y":
-        l=input("Согласится? y[да] n[нет]: ")
+        l = input("Согласится? y[да] n[нет]: ")
         if l == "n":
             exit()
+
+
 def first_start():  # Первый запуск программы. Установка компонентов и модулей
     disclaimer()
     os.system("python -m pip install --upgrade pip --quiet")
@@ -97,9 +99,6 @@ def first_start():  # Первый запуск программы. Устано
     main()
 
 
-
-
-
 def show_help():
     command_descriptions = {
         'exit': 'Завершает программу',
@@ -111,38 +110,40 @@ def show_help():
         'credentials-set': 'Устанавливает логин и пароль для доступа к серверу.',
         'LPS': 'Тоже самое что и credentials-set'
 
-
     }
     print("Справка по командам:")
     for command, description in command_descriptions.items():
         print(f"/{command}: {description}")
 
 
-
 def display_version():
     import requests
-    url="https://api.github.com/repos/MekoNix/NSP/releases/latest"
-    response=requests.get(url)
+    url = "https://api.github.com/repos/MekoNix/NSP/releases/latest"
+    response = requests.get(url)
     release_info = response.json()
     latest_version = release_info.get("name")
     return latest_version
 
+
 def set_host(host):
     from Scripts.log import log_event
     from colorama import Fore
-    host=str(host)
+    host = str(host)
     if not server_ping(host):
-        print(Fore.Red+"Не возможно соединиься с сервером")
-        log_event("Не возможно соединиься с сервером","Warning")
-    write_to_json(f"Host:{host}",host)
+        print(Fore.Red + "Не возможно соединиься с сервером")
+        log_event("Не возможно соединиься с сервером", "Warning")
+    write_to_json(f"Host:{host}", host)
 
-def set_port(port,host):
+
+def set_port(port, host):
     from Scripts.log import log_event
-    port=str(port)
-    write_to_json(f"Port:{port}",host)
+    port = str(port)
+    write_to_json(f"Port:{port}", host)
     log_event(f"Порт установлен: {port}", )
 
+
 import os
+
 
 def find_path(file='', nroot=0, ndir=0):
     """
@@ -170,10 +171,9 @@ def find_path(file='', nroot=0, ndir=0):
         return None  # Возвращаем None, если файл не найден
 
 
-
-def write_to_json(line,host):
+def write_to_json(line, host):
     key, value = map(str.strip, line.split(':', 1))
-    dic={key:value}
+    dic = {key: value}
     try:
         with open(get_json_path(host), 'r') as f:
             # Загружаем существующие данные из файла
@@ -182,14 +182,15 @@ def write_to_json(line,host):
         # Если файл не существует или не может быть декодирован, создаем новый пустой словарь
         data = {}
     data.update(dic)
-    with open(get_json_path(host),'w') as f:
-        f.write("") # Чистим файл, а то идёт наслоение, да кастыль но работает.
-    with open(get_json_path(host),'a') as f:
-        json.dump(data,f,indent=4)
+    with open(get_json_path(host), 'w') as f:
+        f.write("")  # Чистим файл, а то идёт наслоение, да кастыль но работает.
+    with open(get_json_path(host), 'a') as f:
+        json.dump(data, f, indent=4)
+
 
 def get_json_path(host):
     from Scripts.log import log_event
-    log_file_path=find_path(nroot=1)
+    log_file_path = find_path(nroot=1)
     try:
         # Пытаемся открыть файл в режиме создания
         with open(log_file_path, 'x'):
@@ -202,13 +203,10 @@ def get_json_path(host):
     return log_file_path
 
 
+def LPS(pas, user, host):
+    write_to_json(f"User:{user}", host)
+    write_to_json(f"Password:{pas}", host)
 
-
-
-
-def LPS(pas,user,host):
-    write_to_json(f"User:{user}",host)
-    write_to_json(f"Password:{pas}",host)
 
 # =======================================================================================================================
 def main():  # Главаная программма для запуска NSP и его других частей.

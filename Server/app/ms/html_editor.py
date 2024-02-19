@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+
 # Пример использования:
 # Создание и сохранение HTML-страницы
 # page = HTMLPageModifier("My Web Page")
@@ -10,7 +11,6 @@ from datetime import datetime
 
 # Очистка содержимого класса для создания новой страницы
 # page.clear_content()
-
 
 
 class HTMLPageModifier:
@@ -49,7 +49,7 @@ class HTMLPageModifier:
         </body>
         </html>"""
 
-    def add_text_block(self, text, text_color="#D3D3D3",font_weight="normal"):
+    def add_text_block(self, text, text_color="#D3D3D3", font_weight="normal"):
         self.body_content.append(f'<p style="color: {text_color}; font-weight: {font_weight}">{text}</p>')
 
     def add_large_center_text(self, text, text_color="#D3D3D3"):
@@ -66,7 +66,7 @@ class HTMLPageModifier:
     def save_to_file(self, filepath):
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         html_content = self.create_base_page()
-        with open(filepath, 'w',encoding='utf-8') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             f.write(html_content)
 
     def clear_content(self):
@@ -75,8 +75,3 @@ class HTMLPageModifier:
     def add_download_link(self, pdf_file_path, link_text="Download PDF"):
         download_link = f'<a href="{pdf_file_path}" download="{link_text}">{link_text}</a>'
         self.body_content.append(download_link)
-
-
-
-
-
